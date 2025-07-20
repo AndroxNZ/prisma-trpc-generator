@@ -9,27 +9,43 @@
 
 A powerful Prisma generator that creates fully implemented [tRPC](https://trpc.io) routers from your Prisma schema. Automatically generates type-safe API endpoints with Zod validation, middleware support, and optional tRPC Shield integration - saving you time and reducing boilerplate code.
 
-## 💖 Support This Project
+## 🚀 Version 2.0 Beta - Major Upgrade Available!
 
-If this tool helps you build better applications, please consider supporting its development:
+> ⚠️ **Beta Release**: This is a major version upgrade currently in beta testing
 
-<p align="center">
-  <a href="https://github.com/sponsors/omar-dulaimi">
-    <img src="https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?style=for-the-badge&logo=github" alt="GitHub Sponsors" height="40">
-  </a>
-</p>
+**Now available: Prisma 6 & tRPC 11 support with enhanced features!**
 
-Your sponsorship helps maintain and improve this project. Thank you! 🙏
+### 🔥 What's New in v2.0.0-beta
 
-## 🧪 Beta Testing - Latest Version
+- ✅ **Prisma 6.12.0+** - Latest Prisma support with improved performance
+- ✅ **tRPC 11.4.3+** - Enhanced type safety and modern API patterns  
+- ✅ **TypeScript 5.8+** - Cutting-edge TypeScript features
+- ✅ **Zod 4.0+** - Advanced validation with better error handling
+- ✅ **Comprehensive Testing** - New test suite with 90%+ coverage
+- ✅ **Modern Tooling** - ESLint 9, Prettier 3, Vitest 3
 
-**Try the latest version with Prisma 6 & tRPC 11 support!**
+### 📦 Try the Beta
 
 ```bash
-npm install prisma-trpc-generator@latest
+# Install the beta version
+npm install prisma-trpc-generator@beta
+
+# Or specify the exact version
+npm install prisma-trpc-generator@2.0.0-beta.0
 ```
 
-This version includes **major upgrades to Prisma 6.12.0+ and tRPC v11.4.3+** - bringing compatibility with the latest versions and enhanced features. Please test in development and [report any issues](https://github.com/omar-dulaimi/prisma-trpc-generator/issues).
+### 🔄 Migration from v1.x
+
+The v2.0 beta maintains API compatibility but requires:
+- **Node.js 18+** (previously 16+)
+- **Prisma 6.12.0+** (previously 4.8+) 
+- **tRPC 11.4.3+** (previously 10.7+)
+
+Simply update your dependencies and re-run `npx prisma generate` - no code changes needed!
+
+### 📝 Beta Feedback
+
+Please test thoroughly and [report any issues](https://github.com/omar-dulaimi/prisma-trpc-generator/issues). Your feedback helps us deliver a stable v2.0 release!
 
 ## 📖 Table of Contents
 
@@ -62,16 +78,28 @@ This version includes **major upgrades to Prisma 6.12.0+ and tRPC v11.4.3+** - b
 
 ### Installation
 
+#### Beta Version (Recommended - Latest Features)
 ```bash
-npm install prisma-trpc-generator
+# NPM
+npm install prisma-trpc-generator@beta
+
+# Yarn  
+yarn add prisma-trpc-generator@beta
+
+# PNPM
+pnpm add prisma-trpc-generator@beta
 ```
 
+#### Stable Version (v1.4.1)
 ```bash
-yarn add prisma-trpc-generator
-```
+# NPM
+npm install prisma-trpc-generator@latest
 
-```bash
-pnpm add prisma-trpc-generator
+# Yarn
+yarn add prisma-trpc-generator@latest
+
+# PNPM  
+pnpm add prisma-trpc-generator@latest
 ```
 
 ### Setup
@@ -136,16 +164,14 @@ The generator creates:
 
 ![tRPC Routers](https://raw.githubusercontent.com/omar-dulaimi/prisma-trpc-generator/master/trpcRouters.png)
 
-### Supported Versions
+### Version Compatibility
 
-| Component | Version | Status |
-|-----------|---------|--------|
-| Prisma | 6.12.0+ | ✅ Current |
-| tRPC | 11.4.3+ | ✅ Current |
-| Zod | 4.x | ✅ Current |
-| TypeScript | 5.x | ✅ Current |
+| Version | Prisma | tRPC | TypeScript | Zod | Status |
+|---------|--------|------|------------|-----|--------|
+| **v2.0.0-beta** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 🧪 **Beta** |
+| v1.4.1 (stable) | 4.8.0+ | 10.7.0+ | 4.9+ | 3.20+ | ✅ **Stable** |
 
-Legacy versions (Prisma 4.8+, tRPC 10.7+) are supported in earlier releases.
+> **Recommendation**: Use the beta version for new projects to get the latest features and future-proof your setup.
 
 ## ⚙️ Configuration Options
 
@@ -421,6 +447,19 @@ const PostList = () => {
 
 ## 🔍 Troubleshooting
 
+### Beta Version Issues
+
+**Dependency compatibility errors with v2.0.0-beta**
+- Ensure you're using Node.js 18+ (required for beta)
+- Update Prisma to 6.12.0+ and tRPC to 11.4.3+
+- Check that all peer dependencies are compatible
+
+**Migration from v1.x to v2.0.0-beta**
+- Backup your project before upgrading
+- Update all related dependencies (Prisma, tRPC, Zod)
+- Re-run `npx prisma generate` after upgrading
+- Test thoroughly in development environment
+
 ### Common Issues
 
 **Error: Cannot find module '../context'**
@@ -437,8 +476,8 @@ const PostList = () => {
 - Check that the generator is properly configured in `schema.prisma`
 - Clear your build cache and regenerate
 
-**Zod validation errors**
-- Ensure you have the latest version of Zod installed
+**Zod validation errors (v2.0 beta)**
+- Ensure you have Zod 4.0+ installed for beta compatibility
 - Check that your input schemas match your Prisma model types
 
 ### Getting Help
@@ -470,5 +509,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/omar-dulaimi">Omar Dulaimi</a>
+  <a href="https://github.com/omar-dulaimi/prisma-trpc-generator">
+    <img src="https://img.shields.io/github/stars/omar-dulaimi/prisma-trpc-generator?style=social" alt="GitHub Stars">
+  </a>
+  <a href="https://www.npmjs.com/package/prisma-trpc-generator">
+    <img src="https://img.shields.io/npm/v/prisma-trpc-generator/beta.svg?label=beta&color=orange" alt="Beta Version">
+  </a>
+  <a href="https://www.npmjs.com/package/prisma-trpc-generator">
+    <img src="https://img.shields.io/npm/v/prisma-trpc-generator/latest.svg?label=stable&color=green" alt="Stable Version">
+  </a>
+</p>
+
+<p align="center">
+  <strong>Prisma tRPC Generator</strong> - Automate your tRPC API development
 </p>
