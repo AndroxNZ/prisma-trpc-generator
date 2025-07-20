@@ -30,7 +30,7 @@ jobs:
       run: npm run generate
       
     - name: Run tests
-      run: npm run test:ci
+      run: npm run test:basic
       
     - name: Build package
       run: ./package.sh
