@@ -1,4 +1,4 @@
-import { DMMF, EnvValue, GeneratorOptions } from '@prisma/generator-helper';
+import { EnvValue, GeneratorOptions } from '@prisma/generator-helper';
 import { getDMMF, parseEnvValue } from '@prisma/internals';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -63,7 +63,7 @@ export async function generate(options: GeneratorOptions) {
   const modelOperations = prismaClientDmmf.mappings.modelOperations;
   const models = prismaClientDmmf.datamodel.models;
   const hiddenModels: string[] = [];
-  resolveModelsComments(models, hiddenModels);
+  resolveModelsComments([...models], hiddenModels);
   const createRouter = project.createSourceFile(
     path.resolve(outputDir, 'routers', 'helpers', 'createRouter.ts'),
     undefined,
@@ -97,11 +97,11 @@ export async function generate(options: GeneratorOptions) {
     const { model, ...operations } = modelOperation;
     if (hiddenModels.includes(model)) continue;
 
-    const modelActions = Object.keys(operations).filter<DMMF.ModelAction>(
-      (opType): opType is DMMF.ModelAction =>
-        config.generateModelActions.includes(
-          opType.replace('One', '') as DMMF.ModelAction,
-        ),
+    const modelActions = Object.keys(operations).filter(
+      (opType) => {
+        const baseOpType = opType.replace('One', '').replace('OrThrow', '');
+        return config.generateModelActions.some(action => action === baseOpType);
+      }
     );
     if (!modelActions.length) continue;
 
@@ -127,7 +127,7 @@ export async function generate(options: GeneratorOptions) {
       export const ${plural}Router = t.router({`);
 
     for (const opType of modelActions) {
-      const opNameWithModel = operations[opType];
+      const opNameWithModel = operations[opType as keyof typeof operations];
       const baseOpType = opType.replace('OrThrow', '');
 
       generateProcedure(
