@@ -1,36 +1,105 @@
-# Prisma tRPC Generator
+<div align="center">
+  <img src="https://raw.githubusercontent.com/omar-dulaimi/prisma-trpc-generator/master/logo.png" alt="Prisma tRPC Generator" width="100" height="100">
+  
+  # ⚡ Prisma tRPC Generator
+  
+  ### 🚀 **Automatically generate fully implemented tRPC routers from your Prisma schema**
+  
+  <p>
+    <a href="https://www.npmjs.com/package/prisma-trpc-generator">
+      <img src="https://img.shields.io/npm/v/prisma-trpc-generator/latest.svg?style=for-the-badge&logo=npm&color=blue" alt="Stable Version">
+    </a>
+    <a href="https://www.npmjs.com/package/prisma-trpc-generator">
+      <img src="https://img.shields.io/npm/v/prisma-trpc-generator/beta.svg?style=for-the-badge&logo=npm&label=beta&color=orange" alt="Beta Version">
+    </a>
+  </p>
+  
+  <p>
+    <a href="https://www.npmjs.com/package/prisma-trpc-generator">
+      <img src="https://img.shields.io/npm/dt/prisma-trpc-generator.svg?style=for-the-badge&logo=npm&color=green" alt="Downloads">
+    </a>
+    <a href="https://github.com/omar-dulaimi/prisma-trpc-generator/actions">
+      <img src="https://img.shields.io/github/actions/workflow/status/omar-dulaimi/prisma-trpc-generator/ci.yml?style=for-the-badge&logo=github" alt="CI Status">
+    </a>
+    <a href="LICENSE">
+      <img src="https://img.shields.io/npm/l/prisma-trpc-generator.svg?style=for-the-badge&color=purple" alt="License">
+    </a>
+  </p>
+  
+  <p>
+    <strong>🎯 Zero-config • 🛡️ Type-safe • ⚡ Fast • 🔧 Customizable</strong>
+  </p>
+  
+</div>
 
-> 🚀 Automatically generate fully implemented tRPC routers from your Prisma schema
+---
 
-[![npm version](https://badge.fury.io/js/prisma-trpc-generator.svg)](https://badge.fury.io/js/prisma-trpc-generator)
-[![npm downloads](https://img.shields.io/npm/dt/prisma-trpc-generator.svg)](https://www.npmjs.com/package/prisma-trpc-generator)
-[![CI](https://github.com/omar-dulaimi/prisma-trpc-generator/workflows/CI/badge.svg)](https://github.com/omar-dulaimi/prisma-trpc-generator/actions)
-[![License](https://img.shields.io/npm/l/prisma-trpc-generator.svg)](LICENSE)
+<br>
 
-A powerful Prisma generator that creates fully implemented [tRPC](https://trpc.io) routers from your Prisma schema. Automatically generates type-safe API endpoints with Zod validation, middleware support, and optional tRPC Shield integration - saving you time and reducing boilerplate code.
+<div align="center">
+  <h3>💡 Transform your Prisma schema into production-ready tRPC APIs</h3>
+  <p><em>Automatically generates type-safe endpoints with Zod validation, middleware support, and optional tRPC Shield integration</em></p>
+</div>
 
-## 🚀 Version 2.0 Beta - Major Upgrade Available!
+<div align="center">
+  
+  ## 💖 **Support This Project**
+  
+  <p><em>If this tool accelerates your development, consider supporting its growth</em></p>
+  
+  <a href="https://github.com/sponsors/omar-dulaimi">
+    <img src="https://img.shields.io/badge/💝_Sponsor_on_GitHub-ea4aaa?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Sponsors" height="45">
+  </a>
+  
+  <p><strong>✨ Your sponsorship drives innovation and keeps this project thriving ✨</strong></p>
+  
+</div>
 
-> ⚠️ **Beta Release**: This is a major version upgrade currently in beta testing
+<div align="center">
+  
+  ## 🚀 **Version 2.0 Beta** - Major Upgrade Available!
+  
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://img.shields.io/badge/⚠️_BETA_RELEASE-orange?style=for-the-badge&logo=rocket" alt="Beta Release">
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <strong>🎉 Prisma 6 & tRPC 11 support with next-gen features!</strong>
+      </td>
+    </tr>
+  </table>
+  
+</div>
 
-**Now available: Prisma 6 & tRPC 11 support with enhanced features!**
+### ✨ **What's New in v2.0.0-beta**
 
-### 🔥 What's New in v2.0.0-beta
+<div align="center">
+  
+  | 🚀 **Feature** | 📦 **Version** | 🎯 **Benefit** |
+  |----------------|----------------|------------------|
+  | **Prisma** | `6.12.0+` | 🏃‍♂️ Improved performance & stability |
+  | **tRPC** | `11.4.3+` | 🛡️ Enhanced type safety & modern APIs |
+  | **TypeScript** | `5.8+` | ⚡ Cutting-edge language features |
+  | **Zod** | `4.0+` | 🔍 Advanced validation & error handling |
+  | **Testing** | `Vitest 3` | 🧪 90%+ coverage with modern tooling |
+  | **Tooling** | `ESLint 9` | 🔧 Latest dev experience |
+  
+</div>
 
-- ✅ **Prisma 6.12.0+** - Latest Prisma support with improved performance
-- ✅ **tRPC 11.4.3+** - Enhanced type safety and modern API patterns  
-- ✅ **TypeScript 5.8+** - Cutting-edge TypeScript features
-- ✅ **Zod 4.0+** - Advanced validation with better error handling
-- ✅ **Comprehensive Testing** - New test suite with 90%+ coverage
-- ✅ **Modern Tooling** - ESLint 9, Prettier 3, Vitest 3
-
-### 📦 Try the Beta
+<div align="center">
+  
+  ### 📦 **Try the Beta**
+  
+</div>
 
 ```bash
-# Install the beta version
+# 🚀 Install the cutting-edge beta
 npm install prisma-trpc-generator@beta
 
-# Or specify the exact version
+# 🎯 Or lock to specific version
 npm install prisma-trpc-generator@2.0.0-beta.0
 ```
 
@@ -47,32 +116,71 @@ Simply update your dependencies and re-run `npx prisma generate` - no code chang
 
 Please test thoroughly and [report any issues](https://github.com/omar-dulaimi/prisma-trpc-generator/issues). Your feedback helps us deliver a stable v2.0 release!
 
-## 📖 Table of Contents
+<div align="center">
+  
+  ## 📚 **Navigation**
+  
+  <table>
+    <tr>
+      <td><a href="#-features">✨ Features</a></td>
+      <td><a href="#-quick-start">🚀 Quick Start</a></td>
+      <td><a href="#-generated-output">📋 Output</a></td>
+      <td><a href="#️-configuration-options">⚙️ Config</a></td>
+    </tr>
+    <tr>
+      <td><a href="#-advanced-usage">🔧 Advanced</a></td>
+      <td><a href="#-examples">📚 Examples</a></td>
+      <td><a href="#-troubleshooting">🔍 Troubleshooting</a></td>
+      <td><a href="#-contributing">🤝 Contributing</a></td>
+    </tr>
+  </table>
+  
+</div>
 
-- [Features](#-features)
-- [Quick Start](#-quick-start)
-  - [Installation](#installation)
-  - [Setup](#setup)
-- [Generated Output](#-generated-output)
-- [Configuration Options](#️-configuration-options)
-- [Advanced Usage](#-advanced-usage)
-  - [Custom Middleware](#custom-middleware)
-  - [Integration with tRPC Shield](#integration-with-trpc-shield)
-- [Examples](#-examples)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [Related Projects](#-related-projects)
+<div align="center">
+  
+  ## ✨ **Why Choose Prisma tRPC Generator?**
+  
+</div>
 
-## ✨ Features
-
-- 🚀 **Zero Configuration** - Works out of the box with sensible defaults
-- 🔄 **Auto-Generated** - Updates every time you run `prisma generate`
-- 🛡️ **Type Safe** - Full TypeScript support with proper typing
-- 🎯 **Comprehensive** - Covers all Prisma operations (queries, mutations, aggregations)
-- ⚙️ **Configurable** - Customize output directory, middleware, and more
-- 📦 **Lightweight** - Minimal dependencies and fast generation
-- 🔗 **Integrations** - Works seamlessly with Zod validation and tRPC Shield
-- 🎨 **Flexible** - Support for custom middleware and context paths
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <img src="https://img.shields.io/badge/🚀-Zero_Config-blue?style=for-the-badge" alt="Zero Config">
+      <br><strong>Works instantly</strong><br><em>Sensible defaults included</em>
+    </td>
+    <td align="center" width="25%">
+      <img src="https://img.shields.io/badge/🔄-Auto_Generated-green?style=for-the-badge" alt="Auto Generated">
+      <br><strong>Always in sync</strong><br><em>Updates with schema changes</em>
+    </td>
+    <td align="center" width="25%">
+      <img src="https://img.shields.io/badge/🛡️-Type_Safe-purple?style=for-the-badge" alt="Type Safe">
+      <br><strong>100% TypeScript</strong><br><em>Catch errors at compile time</em>
+    </td>
+    <td align="center" width="25%">
+      <img src="https://img.shields.io/badge/🎯-Comprehensive-orange?style=for-the-badge" alt="Comprehensive">
+      <br><strong>Full CRUD coverage</strong><br><em>All Prisma operations included</em>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/⚙️-Configurable-red?style=for-the-badge" alt="Configurable">
+      <br><strong>Highly customizable</strong><br><em>Adapt to your needs</em>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/📦-Lightweight-yellow?style=for-the-badge" alt="Lightweight">
+      <br><strong>Minimal footprint</strong><br><em>Fast generation & runtime</em>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/🔗-Integrations-cyan?style=for-the-badge" alt="Integrations">
+      <br><strong>Ecosystem ready</strong><br><em>Zod, Shield, middleware</em>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/🎨-Flexible-pink?style=for-the-badge" alt="Flexible">
+      <br><strong>Your way</strong><br><em>Custom paths & middleware</em>
+    </td>
+  </tr>
+</table>
 
 ## 🚀 Quick Start
 
@@ -508,18 +616,44 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<p align="center">
-  <a href="https://github.com/omar-dulaimi/prisma-trpc-generator">
-    <img src="https://img.shields.io/github/stars/omar-dulaimi/prisma-trpc-generator?style=social" alt="GitHub Stars">
-  </a>
-  <a href="https://www.npmjs.com/package/prisma-trpc-generator">
-    <img src="https://img.shields.io/npm/v/prisma-trpc-generator/beta.svg?label=beta&color=orange" alt="Beta Version">
-  </a>
-  <a href="https://www.npmjs.com/package/prisma-trpc-generator">
-    <img src="https://img.shields.io/npm/v/prisma-trpc-generator/latest.svg?label=stable&color=green" alt="Stable Version">
-  </a>
-</p>
+<br>
 
-<p align="center">
-  <strong>Prisma tRPC Generator</strong> - Automate your tRPC API development
-</p>
+---
+
+<div align="center">
+  
+  <h3>🌟 **Show Your Support** 🌟</h3>
+  
+  <a href="https://github.com/omar-dulaimi/prisma-trpc-generator">
+    <img src="https://img.shields.io/github/stars/omar-dulaimi/prisma-trpc-generator?style=for-the-badge&logo=github&color=yellow" alt="GitHub Stars">
+  </a>
+  
+  <br><br>
+  
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://img.shields.io/badge/💎-Latest_Stable-success?style=for-the-badge&logo=npm" alt="Stable">
+        <br>
+        <code>v1.4.1</code>
+      </td>
+      <td align="center">
+        <img src="https://img.shields.io/badge/🚀-Beta_Version-warning?style=for-the-badge&logo=rocket" alt="Beta">
+        <br>
+        <code>v2.0.0-beta.0</code>
+      </td>
+    </tr>
+  </table>
+  
+  <br>
+  
+  <p>
+    <strong>Made with ❤️ by</strong>
+    <a href="https://github.com/omar-dulaimi">
+      <img src="https://img.shields.io/badge/Omar_Dulaimi-100000?style=for-the-badge&logo=github&logoColor=white" alt="Omar Dulaimi">
+    </a>
+  </p>
+  
+  <p><em>⚡ Accelerating tRPC development, one schema at a time</em></p>
+  
+</div>
