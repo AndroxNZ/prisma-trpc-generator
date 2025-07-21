@@ -272,12 +272,27 @@ The generator creates:
 
 ![tRPC Routers](https://raw.githubusercontent.com/omar-dulaimi/prisma-trpc-generator/master/trpcRouters.png)
 
+```
+generated/
+├── routers/
+│   ├── index.ts              # Main app router that combines all model routers  
+│   ├── helpers/
+│   │   └── createRouter.ts   # Base router factory with middleware/shield setup
+│   ├── User.router.ts        # User CRUD operations
+│   └── Post.router.ts        # Post CRUD operations
+└── schemas/                  # Zod validation schemas (if withZod: true)
+    ├── objects/              # Input type schemas
+    ├── findManyUser.schema.ts
+    ├── createOneUser.schema.ts
+    └── index.ts              # Barrel exports
+```
+
 ### Version Compatibility
 
-| Version | Prisma | tRPC | TypeScript | Zod | Status |
-|---------|--------|------|------------|-----|--------|
-| **v2.0.0-beta** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 🧪 **Beta** |
-| v1.4.1 (stable) | 4.8.0+ | 10.7.0+ | 4.9+ | 3.20+ | ✅ **Stable** |
+| Version | Prisma | tRPC | TypeScript | Zod | Node.js | Status |
+|---------|--------|------|------------|-----|---------|--------|
+| **v2.0.0-beta** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | 🧪 **Beta** |
+| v1.4.1 (stable) | 4.8.0+ | 10.7.0+ | 4.9+ | 3.20+ | 16+ | ✅ **Stable** |
 
 > **Recommendation**: Use the beta version for new projects to get the latest features and future-proof your setup.
 
@@ -588,20 +603,108 @@ const PostList = () => {
 - Ensure you have Zod 4.0+ installed for beta compatibility
 - Check that your input schemas match your Prisma model types
 
+### Performance Considerations
+
+#### Large Schemas
+For projects with many models (50+), consider:
+- Using selective generation with model hiding
+- Splitting routers into multiple files
+- Implementing lazy loading for routers
+
+#### Build Times
+To optimize build performance:
+- Add generated files to `.gitignore`
+- Use parallel builds where possible
+- Consider caching in CI/CD pipelines
+
+### FAQ
+
+**Q: Can I customize the generated router validation rules?**
+A: The routers are generated based on your Prisma schema constraints. Modify your Prisma model definitions to change validation rules.
+
+**Q: Does this work with Prisma Edge Runtime?**
+A: Yes, the generated routers are compatible with Prisma Edge Runtime.
+
+**Q: Can I use this with databases other than the officially supported ones?**
+A: The generator supports all Prisma-compatible databases. Custom databases should work if Prisma supports them.
+
+**Q: How do I handle enum validation?**
+A: Enums are automatically converted to Zod enum schemas and included in the generated validation.
+
+**Q: Can I exclude certain fields from validation?**
+A: Use Prisma's `@ignore` directive or model-level hiding with `@@Gen.model(hide: true)`.
+
 ### Getting Help
 
-- 🐛 **Bug Reports**: [Create a bug report](https://github.com/omar-dulaimi/prisma-trpc-generator/issues/new?template=bug_report.yml)
-- 💡 **Feature Requests**: [Request a feature](https://github.com/omar-dulaimi/prisma-trpc-generator/issues/new?template=feature_request.md)
+- 🐛 **Bug Reports**: [Create a bug report](https://github.com/omar-dulaimi/prisma-trpc-generator/issues/new)
+- 💡 **Feature Requests**: [Request a feature](https://github.com/omar-dulaimi/prisma-trpc-generator/issues/new)
 - 💬 **Discussions**: [Join the discussion](https://github.com/omar-dulaimi/prisma-trpc-generator/discussions)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on:
+Contributions are welcome! Here's how you can help:
 
-- Setting up the development environment
-- Running tests
-- Submitting pull requests
-- Code style guidelines
+### Development Setup
+
+1. **Fork and clone the repository**
+```bash
+git clone https://github.com/your-username/prisma-trpc-generator.git
+cd prisma-trpc-generator
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Run the development build**
+```bash
+npm run generate
+```
+
+4. **Run tests**
+```bash
+npm test
+```
+
+### Testing
+
+We have comprehensive tests covering:
+- **Unit Tests**: Core transformation logic
+- **Integration Tests**: End-to-end router generation
+- **Multi-Provider Tests**: All database providers
+- **Performance Tests**: Large schema handling
+
+Run specific test suites:
+```bash
+npm run test:basic           # Basic functionality
+npm run test:integration     # Integration testing  
+npm run test:coverage        # Coverage reports
+npm run test:comprehensive   # Full test suite
+```
+
+### Contribution Guidelines
+
+1. **Create an issue** for bugs or feature requests
+2. **Follow the existing code style** (ESLint + Prettier)
+3. **Add tests** for new functionality
+4. **Update documentation** as needed
+5. **Submit a pull request** with a clear description
+
+### Code Style
+
+We use ESLint and Prettier for consistent code formatting:
+```bash
+npm run lint      # Check and fix linting issues
+npm run format    # Format code with Prettier
+```
+
+### Release Process
+
+This project uses semantic versioning and automated releases:
+- **Patch**: Bug fixes and small improvements
+- **Minor**: New features and enhancements  
+- **Major**: Breaking changes
 
 ## 📄 License
 
@@ -609,10 +712,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Related Projects
 
+- [prisma-zod-generator](https://github.com/omar-dulaimi/prisma-zod-generator) - Generate Zod schemas from Prisma schema
 - [prisma-trpc-shield-generator](https://github.com/omar-dulaimi/prisma-trpc-shield-generator) - Generate tRPC Shield permissions from Prisma schema
 - [tRPC Shield](https://github.com/omar-dulaimi/trpc-shield) - Permission system for tRPC
 - [Prisma](https://github.com/prisma/prisma) - Database toolkit and ORM
 - [tRPC](https://trpc.io) - End-to-end typesafe APIs made easy
+
+## 🙏 Acknowledgments
+
+- [Prisma](https://github.com/prisma/prisma) - Modern database toolkit
+- [tRPC](https://trpc.io) - End-to-end typesafe APIs
+- [Zod](https://github.com/colinhacks/zod) - TypeScript-first schema validation
+- All our [contributors](https://github.com/omar-dulaimi/prisma-trpc-generator/graphs/contributors)
 
 ---
 

@@ -66,3 +66,7 @@ Generator supports extensive customization through Prisma schema generator block
 - `src/helpers.ts` - Code generation utilities
 - `prisma/schema.prisma` - Example schema for testing
 - `package.sh` - Build and packaging script
+
+## Commit Guidelines
+- Never mention Claude in commit messages
+- Never add Claude as author or co-author in commits
