@@ -5,6 +5,8 @@
   
   ### 🚀 **Automatically generate fully implemented tRPC routers from your Prisma schema**
   
+  ✨ **Enhanced with improved error handling and better TypeScript support**
+  
   <p>
     <a href="https://www.npmjs.com/package/prisma-trpc-generator">
       <img src="https://img.shields.io/npm/v/prisma-trpc-generator/latest.svg?style=for-the-badge&logo=npm&color=blue" alt="Stable Version">
