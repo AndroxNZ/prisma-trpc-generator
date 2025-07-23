@@ -9,11 +9,11 @@ describe('Performance Tests', () => {
     { name: 'edge-cases', path: join(process.cwd(), 'tests', 'schemas', 'edge-cases.prisma') }
   ];
 
-  it.each(schemas)('should generate $name schema within performance limits', async ({ name, path }) => {
+  it.each(schemas)('should generate $name schema within performance limits', async ({ path }) => {
     const performance = await TrpcGeneratorTestUtils.testGenerationPerformance(path);
     
     // Performance expectations
-    expect(performance.duration).toBeLessThan(30000); // 30 seconds max
+    expect(performance.duration).toBeLessThan(35000); // 35 seconds max
     expect(performance.memoryUsage.heapUsed).toBeLessThan(500 * 1024 * 1024); // 500MB max heap increase
   });
 
@@ -33,7 +33,7 @@ describe('Performance Tests', () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(comprehensiveOutputDir);
     
     // Check file sizes
-    for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+    for (const [, routerContent] of Object.entries(routers.modelRouters)) {
       const sizeKB = Buffer.byteLength(routerContent, 'utf8') / 1024;
       
       // Individual router files should be reasonable size

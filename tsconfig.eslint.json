@@ -10,7 +10,8 @@
     "declaration": false,
     "sourceMap": false,
     "resolveJsonModule": true,
-    "typeRoots": ["src/types.ts"],
+    "types": ["node", "vitest"],
+    "typeRoots": ["node_modules/@types", "src/types.ts"],
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "noEmit": true

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, afterAll } from 'vitest';
 import { join } from 'path';
 import { TrpcGeneratorTestUtils } from './comprehensive-test-utils';
 
@@ -22,10 +22,7 @@ describe('Comprehensive Schema Coverage', () => {
   it('should handle all model types correctly', async () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
     
-    const modelNames = [
-      'User', 'Profile', 'Post', 'Comment', 'Category', 
-      'Product', 'Order', 'OrderItem', 'Book', 'Map', 'Tag', 'Setting', 'Log'
-    ];
+    // Verify that routers were generated for expected models
     
     // Verify routers exist for expected models
     const routerKeys = Object.keys(routers.modelRouters);
@@ -109,7 +106,7 @@ describe('Comprehensive Schema Coverage', () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
     
     // Check for Zod integration in model routers
-    for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+    for (const [, routerContent] of Object.entries(routers.modelRouters)) {
       const zodInfo = TrpcGeneratorTestUtils.validateZodIntegration(routerContent);
       
       // Should have Zod schemas for input validation

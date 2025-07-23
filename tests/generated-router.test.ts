@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { RouterTestUtils } from './router-test-utils';
+// RouterTestUtils not used in this file
 import path from 'path';
 import fs from 'fs';
 
@@ -10,7 +10,7 @@ describe('Generated Router Tests', () => {
     // Ensure we have generated files to test
     if (!fs.existsSync(generatedDir)) {
       // Generate the routers first
-      const { execSync } = require('child_process');
+      const { execSync } = await import('child_process');
       execSync('npm run generate', { stdio: 'inherit' });
     }
   });
@@ -121,7 +121,7 @@ describe('Generated Router Tests', () => {
           expect(content).toContain('export');
           expect(content).toContain('appRouter');
         }
-      } catch (error) {
+      } catch {
         // If import fails, that's expected without proper compilation
         console.log('Import test skipped - files need compilation');
       }

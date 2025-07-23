@@ -189,7 +189,7 @@ describe('Edge Cases and Complex Scenarios', () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
     
     // All generated routers should be valid TypeScript
-    for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+    for (const [, routerContent] of Object.entries(routers.modelRouters)) {
       expect(routerContent).toContain('export');
       expect(routerContent).toContain('router');
       expect(routerContent).not.toContain('undefined');

@@ -65,7 +65,7 @@ describe('Multi-Provider Database Tests', () => {
     it(`should integrate with Zod for ${provider}`, async () => {
       const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
       
-      for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+      for (const [, routerContent] of Object.entries(routers.modelRouters)) {
         const zodInfo = TrpcGeneratorTestUtils.validateZodIntegration(routerContent);
         
         expect(zodInfo.hasZodImports || zodInfo.hasSchemaUsage).toBe(true);
@@ -75,7 +75,7 @@ describe('Multi-Provider Database Tests', () => {
     it(`should generate valid TypeScript for ${provider}`, async () => {
       const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
       
-      for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+      for (const [, routerContent] of Object.entries(routers.modelRouters)) {
         expect(routerContent).toContain('export');
         expect(routerContent).toContain('router');
         expect(routerContent).not.toContain('undefined');
@@ -88,7 +88,7 @@ describe('Multi-Provider Database Tests', () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(mongoOutputDir);
     
     // MongoDB has ObjectId fields
-    for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+    for (const [, routerContent] of Object.entries(routers.modelRouters)) {
       const structure = TrpcGeneratorTestUtils.validateRouterStructure(routerContent);
       expect(structure.hasRouter).toBe(true);
     }
@@ -121,7 +121,7 @@ describe('Multi-Provider Database Tests', () => {
   });
 
   it('should generate consistent router structure across providers', async () => {
-    const outputs: Array<{ provider: string; routers: any }> = [];
+    const outputs: Array<{ provider: string; routers: { appRouter?: string; createRouter?: string; modelRouters: Record<string, string> } }> = [];
     
     for (const provider of providers) {
       const testOutputDir = join(process.cwd(), 'tests', 'generated', provider);

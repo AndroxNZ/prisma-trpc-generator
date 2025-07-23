@@ -14,6 +14,17 @@ export default [
         sourceType: 'module',
         project: './tsconfig.eslint.json',
       },
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        global: 'readonly',
+        require: 'readonly',
+        performance: 'readonly',
+        NodeJS: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -35,6 +46,7 @@ export default [
       'package/',
       'coverage/',
       'prisma/generated/',
+      'tests/generated/',
       '*.js',
       '*.mjs'
     ],

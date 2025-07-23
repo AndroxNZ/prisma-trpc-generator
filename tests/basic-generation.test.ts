@@ -101,7 +101,7 @@ describe('Basic Router Generation', () => {
   it('should integrate with Zod for basic schema', async () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
     
-    for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+    for (const [, routerContent] of Object.entries(routers.modelRouters)) {
       const zodInfo = TrpcGeneratorTestUtils.validateZodIntegration(routerContent);
       
       // Basic schema has withZod: true
@@ -124,7 +124,7 @@ describe('Basic Router Generation', () => {
     const routers = TrpcGeneratorTestUtils.readGeneratedRouters(testOutputDir);
     
     // Check basic TypeScript validity
-    for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+    for (const [, routerContent] of Object.entries(routers.modelRouters)) {
       expect(routerContent).toContain('export');
       expect(routerContent).toContain('router');
       expect(routerContent).not.toContain('undefined');

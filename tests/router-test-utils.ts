@@ -5,7 +5,7 @@ export class RouterTestUtils {
   /**
    * Test that a router has the expected procedures
    */
-  static testRouterStructure(router: any, expectedProcedures: string[]) {
+  static testRouterStructure(router: Record<string, unknown>, expectedProcedures: string[]) {
     expect(router).toBeDefined();
     expect(typeof router).toBe('object');
     
@@ -18,7 +18,7 @@ export class RouterTestUtils {
   /**
    * Test that a procedure has the expected structure
    */
-  static testProcedureStructure(procedure: any) {
+  static testProcedureStructure(procedure: Record<string, unknown>) {
     expect(procedure).toBeDefined();
     expect(typeof procedure).toBe('object');
     expect(procedure._def).toBeDefined();
@@ -60,7 +60,7 @@ export class RouterTestUtils {
    */
   static testOptionalFields<T>(
     schema: z.ZodSchema<T>,
-    baseData: Record<string, any>,
+    baseData: Record<string, unknown>,
     optionalFields: string[]
   ) {
     // Test with all optional fields present
@@ -117,7 +117,7 @@ export class RouterTestUtils {
   /**
    * Test that generated routers work with tRPC
    */
-  static async testTrpcCompatibility(router: any) {
+  static async testTrpcCompatibility(router: () => unknown) {
     expect(router).toBeDefined();
     expect(typeof router).toBe('function');
     

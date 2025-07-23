@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
-import { expect } from 'vitest';
 
 export class TrpcGeneratorTestUtils {
   /**
@@ -28,15 +27,23 @@ export class TrpcGeneratorTestUtils {
       
       fs.writeFileSync(tempSchemaPath, updatedSchema);
       
-      const command = `npx prisma generate --schema="${tempSchemaPath}"`;
+      const command = `npx prisma generate --schema="${path.resolve(tempSchemaPath)}"`;
       execSync(command, { 
         stdio: 'pipe',
-        timeout: 60000 // 60 second timeout
+        timeout: 60000, // 60 second timeout
+        cwd: process.cwd() // Ensure correct working directory
       });
       
       // Clean up temporary schema
-      fs.unlinkSync(tempSchemaPath);
+      if (fs.existsSync(tempSchemaPath)) {
+        fs.unlinkSync(tempSchemaPath);
+      }
     } catch (error) {
+      // Clean up temporary schema on error too
+      const tempSchemaPath = schemaPath + '.tmp';
+      if (fs.existsSync(tempSchemaPath)) {
+        fs.unlinkSync(tempSchemaPath);
+      }
       console.error(`Failed to generate routers for ${schemaPath}:`, error);
       throw error;
     }
@@ -51,7 +58,7 @@ export class TrpcGeneratorTestUtils {
     modelRouters: { [model: string]: string };
   } {
     const routersDir = path.join(outputDir, 'routers');
-    const result: any = { modelRouters: {} };
+    const result: { appRouter?: string; createRouter?: string; modelRouters: Record<string, string> } = { modelRouters: {} };
 
     if (!fs.existsSync(routersDir)) {
       return result;
@@ -253,7 +260,7 @@ export class TrpcGeneratorTestUtils {
       }
 
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -270,8 +277,8 @@ export class TrpcGeneratorTestUtils {
           try {
             fs.rmSync(outputDir, { recursive: true, force: true });
             break;
-          } catch (error: any) {
-            if (error.code === 'ENOTEMPTY' && retries > 1) {
+          } catch (error: unknown) {
+            if ((error as NodeJS.ErrnoException).code === 'ENOTEMPTY' && retries > 1) {
               // Wait a bit and retry for ENOTEMPTY errors
               const waitMs = 100;
               const start = Date.now();
@@ -377,9 +384,9 @@ export class TrpcGeneratorTestUtils {
    */
   static async testMultipleConfigurations(
     baseSchema: string,
-    configurations: Array<{ name: string; config: Record<string, any> }>
-  ): Promise<Array<{ name: string; success: boolean; output?: any; error?: any }>> {
-    const results = [];
+    configurations: Array<{ name: string; config: Record<string, unknown> }>
+  ): Promise<Array<{ name: string; success: boolean; output?: string; error?: unknown }>> {
+    const results: Array<{ name: string; success: boolean; output?: string; error?: unknown }> = [];
 
     for (const config of configurations) {
       try {
@@ -417,7 +424,7 @@ export class TrpcGeneratorTestUtils {
    */
   private static modifySchemaConfig(
     schemaContent: string, 
-    config: Record<string, any>
+    config: Record<string, unknown>
   ): string {
     let modified = schemaContent;
 

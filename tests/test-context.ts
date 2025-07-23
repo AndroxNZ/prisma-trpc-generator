@@ -4,6 +4,6 @@ export interface Context {
     id: number;
     role: string;
   };
-  req?: any;
-  res?: any;
+  req?: unknown;
+  res?: unknown;
 }
