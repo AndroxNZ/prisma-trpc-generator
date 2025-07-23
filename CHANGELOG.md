@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v1.0.0...v1.1.0) (2025-07-23)
+
+### 🚀 Features
+
+* enhance documentation with improved error handling info ([eff11e6](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/eff11e6edf92ef50da20a4dcae5332637c8e5796))
+
 ## 1.0.0 (2025-07-23)
 
 ### 🚀 Features
