@@ -1,3 +1,9 @@
+## [2.0.1](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.0...v2.0.1) (2025-07-23)
+
+### 🐛 Bug Fixes
+
+* update version to 2.0.0 for stable release ([1a6d251](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/1a6d2515fc1a89821cb982c1c7dbb4d1ab3c1019))
+
 ## [1.1.1](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v1.1.0...v1.1.1) (2025-07-23)
 
 ### 🐛 Bug Fixes
