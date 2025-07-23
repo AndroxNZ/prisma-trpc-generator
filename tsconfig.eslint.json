@@ -7,14 +7,14 @@
     "lib": ["es2019"],
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "declaration": true,
-    "sourceMap": true,
+    "declaration": false,
+    "sourceMap": false,
     "resolveJsonModule": true,
-    "outDir": "./lib",
-    "rootDir": "./src",
     "typeRoots": ["src/types.ts"],
     "skipLibCheck": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "noEmit": true
   },
-  "include": ["./src/**/**/*.ts"]
+  "include": ["./src/**/*.ts", "./tests/**/*.ts"],
+  "exclude": ["node_modules", "lib", "package", "coverage", "prisma/generated"]
 }
