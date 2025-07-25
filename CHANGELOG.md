@@ -1,3 +1,9 @@
+## [2.0.3](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.2...v2.0.3) (2025-07-25)
+
+### 📚 Documentation
+
+* remove hardcoded version references from README ([713fc84](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/713fc842e510471acafa546be3db350b3cdd37f3))
+
 ## [2.0.1](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.0...v2.0.1) (2025-07-23)
 
 ### 🐛 Bug Fixes
