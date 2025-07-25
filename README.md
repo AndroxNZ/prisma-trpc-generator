@@ -9,10 +9,7 @@
   
   <p>
     <a href="https://www.npmjs.com/package/prisma-trpc-generator">
-      <img src="https://img.shields.io/npm/v/prisma-trpc-generator/latest.svg?style=for-the-badge&logo=npm&color=blue" alt="Stable Version">
-    </a>
-    <a href="https://www.npmjs.com/package/prisma-trpc-generator">
-      <img src="https://img.shields.io/npm/v/prisma-trpc-generator/beta.svg?style=for-the-badge&logo=npm&label=beta&color=orange" alt="Beta Version">
+      <img src="https://img.shields.io/npm/v/prisma-trpc-generator.svg?style=for-the-badge&logo=npm&color=blue" alt="Latest Version">
     </a>
   </p>
   
@@ -57,26 +54,7 @@
   
 </div>
 
-<div align="center">
-  
-  ## 🚀 **Version 2.0 Beta** - Major Upgrade Available!
-  
-  <table>
-    <tr>
-      <td align="center">
-        <img src="https://img.shields.io/badge/⚠️_BETA_RELEASE-orange?style=for-the-badge&logo=rocket" alt="Beta Release">
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <strong>🎉 Prisma 6 & tRPC 11 support with next-gen features!</strong>
-      </td>
-    </tr>
-  </table>
-  
-</div>
-
-### ✨ **What's New in v2.0.0-beta**
+## ✨ **What's New**
 
 <div align="center">
   
@@ -91,32 +69,12 @@
   
 </div>
 
-<div align="center">
-  
-  ### 📦 **Try the Beta**
-  
-</div>
+### 🔄 Requirements
 
-```bash
-# 🚀 Install the cutting-edge beta
-npm install prisma-trpc-generator@beta
-
-# 🎯 Or lock to specific version
-npm install prisma-trpc-generator@2.0.0-beta.0
-```
-
-### 🔄 Migration from v1.x
-
-The v2.0 beta maintains API compatibility but requires:
-- **Node.js 18+** (previously 16+)
-- **Prisma 6.12.0+** (previously 4.8+) 
-- **tRPC 11.4.3+** (previously 10.7+)
-
-Simply update your dependencies and re-run `npx prisma generate` - no code changes needed!
-
-### 📝 Beta Feedback
-
-Please test thoroughly and [report any issues](https://github.com/omar-dulaimi/prisma-trpc-generator/issues). Your feedback helps us deliver a stable v2.0 release!
+- **Node.js 18+**
+- **Prisma 6.12.0+** 
+- **tRPC 11.4.3+**
+- **TypeScript 5.8+**
 
 <div align="center">
   
@@ -188,28 +146,15 @@ Please test thoroughly and [report any issues](https://github.com/omar-dulaimi/p
 
 ### Installation
 
-#### Beta Version (Recommended - Latest Features)
 ```bash
 # NPM
-npm install prisma-trpc-generator@beta
+npm install prisma-trpc-generator
 
 # Yarn  
-yarn add prisma-trpc-generator@beta
+yarn add prisma-trpc-generator
 
 # PNPM
-pnpm add prisma-trpc-generator@beta
-```
-
-#### Stable Version (v1.4.1)
-```bash
-# NPM
-npm install prisma-trpc-generator@latest
-
-# Yarn
-yarn add prisma-trpc-generator@latest
-
-# PNPM  
-pnpm add prisma-trpc-generator@latest
+pnpm add prisma-trpc-generator
 ```
 
 ### Setup
@@ -293,10 +238,10 @@ generated/
 
 | Version | Prisma | tRPC | TypeScript | Zod | Node.js | Status |
 |---------|--------|------|------------|-----|---------|--------|
-| **v2.0.0-beta** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | 🧪 **Beta** |
+| **v2.0.2+** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | ✅ **Stable** |
 | v1.4.1 (stable) | 4.8.0+ | 10.7.0+ | 4.9+ | 3.20+ | 16+ | ✅ **Stable** |
 
-> **Recommendation**: Use the beta version for new projects to get the latest features and future-proof your setup.
+> **Recommendation**: Use the latest stable version for all projects.
 
 ## ⚙️ Configuration Options
 
@@ -572,14 +517,14 @@ const PostList = () => {
 
 ## 🔍 Troubleshooting
 
-### Beta Version Issues
+### Common Issues
 
-**Dependency compatibility errors with v2.0.0-beta**
-- Ensure you're using Node.js 18+ (required for beta)
+**Dependency compatibility errors**
+- Ensure you're using Node.js 18+
 - Update Prisma to 6.12.0+ and tRPC to 11.4.3+
 - Check that all peer dependencies are compatible
 
-**Migration from v1.x to v2.0.0-beta**
+**Migration from v1.x to v2.x**
 - Backup your project before upgrading
 - Update all related dependencies (Prisma, tRPC, Zod)
 - Re-run `npx prisma generate` after upgrading
@@ -601,8 +546,8 @@ const PostList = () => {
 - Check that the generator is properly configured in `schema.prisma`
 - Clear your build cache and regenerate
 
-**Zod validation errors (v2.0 beta)**
-- Ensure you have Zod 4.0+ installed for beta compatibility
+**Zod validation errors**
+- Ensure you have Zod 4.0+ installed for compatibility
 - Check that your input schemas match your Prisma model types
 
 ### Performance Considerations
@@ -751,9 +696,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
         <code>v1.4.1</code>
       </td>
       <td align="center">
-        <img src="https://img.shields.io/badge/🚀-Beta_Version-warning?style=for-the-badge&logo=rocket" alt="Beta">
+        <img src="https://img.shields.io/badge/🚀-Latest_Version-success?style=for-the-badge&logo=rocket" alt="Latest">
         <br>
-        <code>v2.0.0-beta.0</code>
+        <code>v2.0.2+</code>
       </td>
     </tr>
   </table>
