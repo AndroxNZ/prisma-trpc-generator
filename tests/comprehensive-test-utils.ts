@@ -27,7 +27,14 @@ export class TrpcGeneratorTestUtils {
       
       fs.writeFileSync(tempSchemaPath, updatedSchema);
       
-      const command = `npx prisma generate --schema="${path.resolve(tempSchemaPath)}"`;
+      const resolvedTempSchemaPath = path.resolve(tempSchemaPath);
+      const command = `npx prisma generate --schema="${resolvedTempSchemaPath}"`;
+      
+      // Verify the temp file exists before running the command
+      if (!fs.existsSync(resolvedTempSchemaPath)) {
+        throw new Error(`Temporary schema file not found at: ${resolvedTempSchemaPath}`);
+      }
+      
       execSync(command, { 
         stdio: 'pipe',
         timeout: 60000, // 60 second timeout
@@ -35,14 +42,15 @@ export class TrpcGeneratorTestUtils {
       });
       
       // Clean up temporary schema
-      if (fs.existsSync(tempSchemaPath)) {
-        fs.unlinkSync(tempSchemaPath);
+      if (fs.existsSync(resolvedTempSchemaPath)) {
+        fs.unlinkSync(resolvedTempSchemaPath);
       }
     } catch (error) {
       // Clean up temporary schema on error too
       const tempSchemaPath = schemaPath + '.tmp';
-      if (fs.existsSync(tempSchemaPath)) {
-        fs.unlinkSync(tempSchemaPath);
+      const resolvedTempSchemaPath = path.resolve(tempSchemaPath);
+      if (fs.existsSync(resolvedTempSchemaPath)) {
+        fs.unlinkSync(resolvedTempSchemaPath);
       }
       console.error(`Failed to generate routers for ${schemaPath}:`, error);
       throw error;
