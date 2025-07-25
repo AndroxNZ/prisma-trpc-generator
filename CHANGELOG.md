@@ -1,3 +1,9 @@
+## [2.0.5](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.4...v2.0.5) (2025-07-25)
+
+### 🐛 Bug Fixes
+
+* update prisma-zod-generator to 1.0.7 ([2fea61b](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/2fea61b7c65e74b52f95f910c9d2000745581560))
+
 ## [2.0.4](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.3...v2.0.4) (2025-07-25)
 
 ### 🐛 Bug Fixes
