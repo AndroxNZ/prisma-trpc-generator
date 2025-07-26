@@ -69,6 +69,85 @@
   
 </div>
 
+## 🌟 Prisma Client Generator Support
+
+<div align="center">
+  
+  **✨ Starting from v2.1.0, full support for the new Prisma Client generator preview feature ✨**
+  
+</div>
+
+This generator now supports both the legacy and new Prisma Client generators:
+
+### Supported Generators
+
+| Generator Type | Provider | Supported Since | Status |
+|----------------|----------|-----------------|---------|
+| **Legacy** | `prisma-client-js` | v1.0.0+ | ✅ **Fully Supported** |
+| **Preview** | `prisma-client` | **v2.1.0+** | ✅ **Fully Supported** |
+
+### Preview Features Support
+
+The following preview features are automatically detected and supported:
+
+| Preview Feature | Description | Status |
+|-----------------|-------------|---------|
+| `queryCompiler` | Improved query compilation performance | ✅ Supported |
+| `driverAdapters` | Enhanced database driver compatibility | ✅ Supported |
+| `metrics` | Query performance metrics collection | ✅ Supported |
+| Custom features | Any new preview features from Prisma | ✅ Auto-detected |
+
+### Usage Examples
+
+**Legacy Generator (existing projects):**
+```prisma
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["queryCompiler"]
+}
+
+generator trpc {
+  provider = "prisma-trpc-generator"
+  // ... your config
+}
+```
+
+**New Generator (Prisma 6.12.0+ projects):**
+```prisma
+generator client {
+  provider = "prisma-client"
+  output = "./generated/client"
+  previewFeatures = ["queryCompiler", "driverAdapters", "metrics"]
+  runtime = "nodejs"
+  moduleFormat = "esm"
+}
+
+generator trpc {
+  provider = "prisma-trpc-generator"
+  // ... your config
+}
+```
+
+**Mixed Setup (both generators):**
+```prisma
+generator clientLegacy {
+  provider = "prisma-client-js"
+}
+
+generator clientNew {
+  provider = "prisma-client"
+  output = "./generated/client-new"
+  previewFeatures = ["queryCompiler", "driverAdapters"]
+}
+
+generator trpc {
+  provider = "prisma-trpc-generator"
+  // Automatically detects and uses preview features from any client generator
+}
+```
+
+> **📝 Note**: Preview features are automatically detected from your Prisma client generator and applied to the generated tRPC routers. No additional configuration needed!
+
 ### 🔄 Requirements
 
 - **Node.js 18+**
@@ -238,7 +317,8 @@ generated/
 
 | Version | Prisma | tRPC | TypeScript | Zod | Node.js | Status |
 |---------|--------|------|------------|-----|---------|--------|
-| **v2.0.2+** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | ✅ **Stable** |
+| **v2.1.0+** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | ✅ **Stable** (+ Preview Features) |
+| v2.0.2 | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | ✅ **Stable** |
 | v1.4.1 (stable) | 4.8.0+ | 10.7.0+ | 4.9+ | 3.20+ | 16+ | ✅ **Stable** |
 
 > **Recommendation**: Use the latest stable version for all projects.
@@ -698,7 +778,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
       <td align="center">
         <img src="https://img.shields.io/badge/🚀-Latest_Version-success?style=for-the-badge&logo=rocket" alt="Latest">
         <br>
-        <code>v2.0.2+</code>
+        <code>v2.1.0+</code>
       </td>
     </tr>
   </table>
