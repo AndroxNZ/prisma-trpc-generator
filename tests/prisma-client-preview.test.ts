@@ -326,7 +326,7 @@ model Profile {
       expect(routers.modelRouters['Profile']).toBeTruthy();
       
       // All models should have valid router structure
-      for (const [modelName, routerContent] of Object.entries(routers.modelRouters)) {
+      for (const [, routerContent] of Object.entries(routers.modelRouters)) {
         const structure = TrpcGeneratorTestUtils.validateRouterStructure(routerContent);
         expect(structure.hasRouter).toBe(true);
         expect(structure.procedures.length).toBeGreaterThan(0);
