@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.1.0...v2.1.1) (2025-07-26)
+
+### 📚 Documentation
+
+* add Prisma Client generator preview features section ([79af40f](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/79af40fe2f10df3143d8285bb366ba5db104d263))
+
 ## [2.1.0](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.5...v2.1.0) (2025-07-26)
 
 ### 🚀 Features
