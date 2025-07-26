@@ -52,8 +52,25 @@ export async function generate(options: GeneratorOptions) {
   }
 
   const prismaClientProvider = options.otherGenerators.find(
-    (it) => parseEnvValue(it.provider) === 'prisma-client-js',
+    (it) => {
+      const provider = parseEnvValue(it.provider);
+      return provider === 'prisma-client-js' || provider === 'prisma-client';
+    },
   );
+
+  if (!prismaClientProvider) {
+    throw new Error(
+      'Prisma tRPC Generator requires a Prisma Client generator. Please add one of the following to your schema:\n\n' +
+      'generator client {\n' +
+      '  provider = "prisma-client-js"\n' +
+      '}\n\n' +
+      'OR\n\n' +
+      'generator client {\n' +
+      '  provider = "prisma-client"\n' +
+      '  output   = "./generated/client"\n' +
+      '}'
+    );
+  }
 
   const prismaClientDmmf = await getDMMF({
     datamodel: options.datamodel,
