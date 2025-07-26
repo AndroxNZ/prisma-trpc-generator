@@ -1,3 +1,13 @@
+## [2.1.0](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.5...v2.1.0) (2025-07-26)
+
+### 🚀 Features
+
+* add support for prisma-client generator preview feature ([0994468](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/0994468010ca7142ae5c66d4e148069f081a1735))
+
+### 🐛 Bug Fixes
+
+* remove unused variable in prisma-client-preview test ([3308958](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/33089583cc062f76c28c960629bb8b464def3ade))
+
 ## [2.0.5](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.0.4...v2.0.5) (2025-07-25)
 
 ### 🐛 Bug Fixes
