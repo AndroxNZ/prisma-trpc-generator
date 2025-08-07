@@ -1,3 +1,18 @@
+## [2.1.2](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.1.1...v2.1.2) (2025-08-07)
+
+### 🐛 Bug Fixes
+
+* enhance test schema with Bytes field and expose Book model ([c81500d](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/c81500d48a619be76ea19f0d1c6026e099f37152))
+* update prisma-zod-generator to v1.2.0 ([5882db0](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/5882db06af4f3a2e63bf42f8e8eb3e3c616c09cf))
+
+### 📚 Documentation
+
+* restructure and improve README content ([9630e42](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/9630e42bec6bf6ce4f4ecf9fc96b5542f69aaf05))
+
+### ♻️ Code Refactoring
+
+* improve context types and imports ([288d963](https://github.com/omar-dulaimi/prisma-trpc-generator/commit/288d963c6b208ced221247cfdc4406d5cf4a6a72))
+
 ## [2.1.1](https://github.com/omar-dulaimi/prisma-trpc-generator/compare/v2.1.0...v2.1.1) (2025-07-26)
 
 ### 📚 Documentation
