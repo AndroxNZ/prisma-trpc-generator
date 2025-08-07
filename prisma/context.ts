@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { inferAsyncReturnType } from '@trpc/server';
+import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 
-export const createContext = async ({ req, res }) => {
+export const createContext = ({ req, res }: CreateExpressContextOptions) => {
   const prisma = new PrismaClient();
   return {
     prisma,
@@ -9,4 +9,4 @@ export const createContext = async ({ req, res }) => {
   };
 };
 
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = Awaited<ReturnType<typeof createContext>>;
