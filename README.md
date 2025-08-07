@@ -54,172 +54,30 @@
   
 </div>
 
-## ✨ **What's New**
+## ✨ **Key Features**
+
+- 🚀 **Zero Configuration** - Works out of the box with sensible defaults
+- 🔄 **Auto-Generated** - Always stays in sync with your Prisma schema  
+- 🛡️ **100% Type-Safe** - Full TypeScript support with compile-time error checking
+- 🎯 **Complete CRUD** - Generates all Prisma operations (find, create, update, delete)
+- ⚙️ **Highly Customizable** - Configure paths, middleware, and generation options
+- 📦 **Lightweight** - Minimal runtime overhead and fast generation
+- 🔗 **Rich Ecosystem** - Integrates with Zod validation, tRPC Shield, and custom middleware
+- 🎨 **Flexible** - Supports custom context, middleware, and routing patterns
+
+---
 
 <div align="center">
   
-  | 🚀 **Feature** | 📦 **Version** | 🎯 **Benefit** |
-  |----------------|----------------|------------------|
-  | **Prisma** | `6.12.0+` | 🏃‍♂️ Improved performance & stability |
-  | **tRPC** | `11.4.3+` | 🛡️ Enhanced type safety & modern APIs |
-  | **TypeScript** | `5.8+` | ⚡ Cutting-edge language features |
-  | **Zod** | `4.0+` | 🔍 Advanced validation & error handling |
-  | **Testing** | `Vitest 3` | 🧪 90%+ coverage with modern tooling |
-  | **Tooling** | `ESLint 9` | 🔧 Latest dev experience |
+  <h3>🌟 **Show Your Support** 🌟</h3>
+  
+  <a href="https://github.com/omar-dulaimi/prisma-trpc-generator">
+    <img src="https://img.shields.io/github/stars/omar-dulaimi/prisma-trpc-generator?style=for-the-badge&logo=github&color=yellow" alt="GitHub Stars">
+  </a>
   
 </div>
 
-## 🌟 Prisma Client Generator Support
-
-<div align="center">
-  
-  **✨ Starting from v2.1.0, full support for the new Prisma Client generator preview feature ✨**
-  
-</div>
-
-This generator now supports both the legacy and new Prisma Client generators:
-
-### Supported Generators
-
-| Generator Type | Provider | Supported Since | Status |
-|----------------|----------|-----------------|---------|
-| **Legacy** | `prisma-client-js` | v1.0.0+ | ✅ **Fully Supported** |
-| **Preview** | `prisma-client` | **v2.1.0+** | ✅ **Fully Supported** |
-
-### Preview Features Support
-
-The following preview features are automatically detected and supported:
-
-| Preview Feature | Description | Status |
-|-----------------|-------------|---------|
-| `queryCompiler` | Improved query compilation performance | ✅ Supported |
-| `driverAdapters` | Enhanced database driver compatibility | ✅ Supported |
-| `metrics` | Query performance metrics collection | ✅ Supported |
-| Custom features | Any new preview features from Prisma | ✅ Auto-detected |
-
-### Usage Examples
-
-**Legacy Generator (existing projects):**
-```prisma
-generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["queryCompiler"]
-}
-
-generator trpc {
-  provider = "prisma-trpc-generator"
-  // ... your config
-}
-```
-
-**New Generator (Prisma 6.12.0+ projects):**
-```prisma
-generator client {
-  provider = "prisma-client"
-  output = "./generated/client"
-  previewFeatures = ["queryCompiler", "driverAdapters", "metrics"]
-  runtime = "nodejs"
-  moduleFormat = "esm"
-}
-
-generator trpc {
-  provider = "prisma-trpc-generator"
-  // ... your config
-}
-```
-
-**Mixed Setup (both generators):**
-```prisma
-generator clientLegacy {
-  provider = "prisma-client-js"
-}
-
-generator clientNew {
-  provider = "prisma-client"
-  output = "./generated/client-new"
-  previewFeatures = ["queryCompiler", "driverAdapters"]
-}
-
-generator trpc {
-  provider = "prisma-trpc-generator"
-  // Automatically detects and uses preview features from any client generator
-}
-```
-
-> **📝 Note**: Preview features are automatically detected from your Prisma client generator and applied to the generated tRPC routers. No additional configuration needed!
-
-### 🔄 Requirements
-
-- **Node.js 18+**
-- **Prisma 6.12.0+** 
-- **tRPC 11.4.3+**
-- **TypeScript 5.8+**
-
-<div align="center">
-  
-  ## 📚 **Navigation**
-  
-  <table>
-    <tr>
-      <td><a href="#-features">✨ Features</a></td>
-      <td><a href="#-quick-start">🚀 Quick Start</a></td>
-      <td><a href="#-generated-output">📋 Output</a></td>
-      <td><a href="#️-configuration-options">⚙️ Config</a></td>
-    </tr>
-    <tr>
-      <td><a href="#-advanced-usage">🔧 Advanced</a></td>
-      <td><a href="#-examples">📚 Examples</a></td>
-      <td><a href="#-troubleshooting">🔍 Troubleshooting</a></td>
-      <td><a href="#-contributing">🤝 Contributing</a></td>
-    </tr>
-  </table>
-  
-</div>
-
-<div align="center">
-  
-  ## ✨ **Why Choose Prisma tRPC Generator?**
-  
-</div>
-
-<table>
-  <tr>
-    <td align="center" width="25%">
-      <img src="https://img.shields.io/badge/🚀-Zero_Config-blue?style=for-the-badge" alt="Zero Config">
-      <br><strong>Works instantly</strong><br><em>Sensible defaults included</em>
-    </td>
-    <td align="center" width="25%">
-      <img src="https://img.shields.io/badge/🔄-Auto_Generated-green?style=for-the-badge" alt="Auto Generated">
-      <br><strong>Always in sync</strong><br><em>Updates with schema changes</em>
-    </td>
-    <td align="center" width="25%">
-      <img src="https://img.shields.io/badge/🛡️-Type_Safe-purple?style=for-the-badge" alt="Type Safe">
-      <br><strong>100% TypeScript</strong><br><em>Catch errors at compile time</em>
-    </td>
-    <td align="center" width="25%">
-      <img src="https://img.shields.io/badge/🎯-Comprehensive-orange?style=for-the-badge" alt="Comprehensive">
-      <br><strong>Full CRUD coverage</strong><br><em>All Prisma operations included</em>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/⚙️-Configurable-red?style=for-the-badge" alt="Configurable">
-      <br><strong>Highly customizable</strong><br><em>Adapt to your needs</em>
-    </td>
-    <td align="center">
-      <img src="https://img.shields.io/badge/📦-Lightweight-yellow?style=for-the-badge" alt="Lightweight">
-      <br><strong>Minimal footprint</strong><br><em>Fast generation & runtime</em>
-    </td>
-    <td align="center">
-      <img src="https://img.shields.io/badge/🔗-Integrations-cyan?style=for-the-badge" alt="Integrations">
-      <br><strong>Ecosystem ready</strong><br><em>Zod, Shield, middleware</em>
-    </td>
-    <td align="center">
-      <img src="https://img.shields.io/badge/🎨-Flexible-pink?style=for-the-badge" alt="Flexible">
-      <br><strong>Your way</strong><br><em>Custom paths & middleware</em>
-    </td>
-  </tr>
-</table>
+---
 
 ## 🚀 Quick Start
 
@@ -244,12 +102,17 @@ pnpm add prisma-trpc-generator
 
 ```prisma
 generator trpc {
-  provider          = "prisma-trpc-generator"
-  withZod           = true
-  withMiddleware    = false
-  withShield        = false
-  contextPath       = "../src/context"
-  trpcOptionsPath   = "../src/trpcOptions"
+  provider                  = "prisma-trpc-generator"
+  output                    = "./generated"
+  withZod                   = true
+  withMiddleware            = true
+  withShield                = false
+  contextPath               = "../../../../src/context"
+  trpcOptionsPath           = "../../../../src/trpcOptions"
+  isGenerateSelect          = false
+  isGenerateInclude         = false
+  showModelNameInProcedure  = true
+  generateModelActions      = "findMany,findUnique,findFirst,create,createMany,update,updateMany,upsert,delete,deleteMany,aggregate,groupBy,count"
 }
 ```
 
@@ -313,15 +176,6 @@ generated/
     └── index.ts              # Barrel exports
 ```
 
-### Version Compatibility
-
-| Version | Prisma | tRPC | TypeScript | Zod | Node.js | Status |
-|---------|--------|------|------------|-----|---------|--------|
-| **v2.1.0+** | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | ✅ **Stable** (+ Preview Features) |
-| v2.0.2 | 6.12.0+ | 11.4.3+ | 5.8+ | 4.0+ | 18+ | ✅ **Stable** |
-| v1.4.1 (stable) | 4.8.0+ | 10.7.0+ | 4.9+ | 3.20+ | 16+ | ✅ **Stable** |
-
-> **Recommendation**: Use the latest stable version for all projects.
 
 ## ⚙️ Configuration Options
 
@@ -599,19 +453,6 @@ const PostList = () => {
 
 ### Common Issues
 
-**Dependency compatibility errors**
-- Ensure you're using Node.js 18+
-- Update Prisma to 6.12.0+ and tRPC to 11.4.3+
-- Check that all peer dependencies are compatible
-
-**Migration from v1.x to v2.x**
-- Backup your project before upgrading
-- Update all related dependencies (Prisma, tRPC, Zod)
-- Re-run `npx prisma generate` after upgrading
-- Test thoroughly in development environment
-
-### Common Issues
-
 **Error: Cannot find module '../context'**
 - Ensure your `contextPath` is correct relative to the output directory
 - Check that your context file exports a `Context` type
@@ -754,37 +595,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<br>
-
----
-
 <div align="center">
-  
-  <h3>🌟 **Show Your Support** 🌟</h3>
-  
-  <a href="https://github.com/omar-dulaimi/prisma-trpc-generator">
-    <img src="https://img.shields.io/github/stars/omar-dulaimi/prisma-trpc-generator?style=for-the-badge&logo=github&color=yellow" alt="GitHub Stars">
-  </a>
-  
-  <br><br>
-  
-  <table>
-    <tr>
-      <td align="center">
-        <img src="https://img.shields.io/badge/💎-Latest_Stable-success?style=for-the-badge&logo=npm" alt="Stable">
-        <br>
-        <code>v1.4.1</code>
-      </td>
-      <td align="center">
-        <img src="https://img.shields.io/badge/🚀-Latest_Version-success?style=for-the-badge&logo=rocket" alt="Latest">
-        <br>
-        <code>v2.1.0+</code>
-      </td>
-    </tr>
-  </table>
-  
-  <br>
-  
   <p>
     <strong>Made with ❤️ by</strong>
     <a href="https://github.com/omar-dulaimi">
@@ -793,5 +604,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   </p>
   
   <p><em>⚡ Accelerating tRPC development, one schema at a time</em></p>
-  
 </div>
