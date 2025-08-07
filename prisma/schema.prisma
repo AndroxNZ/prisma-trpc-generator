@@ -17,6 +17,7 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
@@ -36,9 +37,9 @@ model Post {
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   likes     BigInt
+  bytes     Bytes
 }
 
-/// @@Gen.model(hide: true)
 model Book {
   id       Int    @unique
   title    String
