@@ -31,7 +31,7 @@ export const generateCreateRouterImport = ({
   }
 
   sourceFile.addImportDeclaration({
-    moduleSpecifier: './helpers/createRouter',
+    moduleSpecifier: `./helpers/createRouter${config?.importExtension ? '.' + config.importExtension : ''}`,
     namedImports: imports,
   });
 };
@@ -47,6 +47,7 @@ export const generateShieldImport = (
   sourceFile: SourceFile,
   options: GeneratorOptions,
   value: string | boolean,
+  config?: Config,
 ) => {
   const output = options.generator.output;
   if (!output) {
@@ -54,10 +55,22 @@ export const generateShieldImport = (
   }
   const outputDir = parseEnvValue(output);
 
-  let shieldPath = getRelativePath(outputDir, 'shield/shield');
+  let shieldPath = getRelativePath(
+    outputDir,
+    'shield/shield',
+    undefined,
+    undefined,
+    config?.importExtension,
+  );
 
   if (typeof value === 'string') {
-    shieldPath = getRelativePath(outputDir, value, true, options.schemaPath);
+    shieldPath = getRelativePath(
+      outputDir,
+      value,
+      true,
+      options.schemaPath,
+      config?.importExtension,
+    );
   }
 
   sourceFile.addImportDeclaration({
@@ -69,6 +82,7 @@ export const generateShieldImport = (
 export const generateMiddlewareImport = (
   sourceFile: SourceFile,
   options: GeneratorOptions,
+  config?: Config,
 ) => {
   const output = options.generator.output;
   if (!output) {
@@ -76,7 +90,13 @@ export const generateMiddlewareImport = (
   }
   const outputDir = parseEnvValue(output);
   sourceFile.addImportDeclaration({
-    moduleSpecifier: getRelativePath(outputDir, 'middleware'),
+    moduleSpecifier: getRelativePath(
+      outputDir,
+      'middleware',
+      undefined,
+      undefined,
+      config?.importExtension,
+    ),
     namedImports: ['permissions'],
   });
 };
@@ -85,9 +105,10 @@ export const generateRouterImport = (
   sourceFile: SourceFile,
   modelNamePlural: string,
   modelNameCamelCase: string,
+  config?: Config,
 ) => {
   sourceFile.addImportDeclaration({
-    moduleSpecifier: `./${modelNameCamelCase}.router`,
+    moduleSpecifier: `./${modelNameCamelCase}.router${config?.importExtension ? '.' + config.importExtension : ''}`,
     namedImports: [`${modelNamePlural}Router`],
   });
 };
@@ -110,6 +131,7 @@ export function generateBaseRouter(
     config.contextPath,
     true,
     options.schemaPath,
+    config.importExtension,
   )}';
   `);
 
@@ -121,6 +143,7 @@ export function generateBaseRouter(
       config.trpcOptionsPath,
       true,
       options.schemaPath,
+      config.importExtension,
     )}';
     `);
   }
@@ -179,6 +202,7 @@ function generateMiddlewareDeclarations(
     config.withMiddleware,
     true,
     options.schemaPath,
+    config.importExtension,
   )}';
   `);
     sourceFile.addStatements(/* ts */ `

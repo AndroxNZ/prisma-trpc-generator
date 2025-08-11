@@ -17,7 +17,7 @@ const configShield = z.union([
 // Define model actions directly since DMMF.ModelAction is not available at runtime
 const ModelAction = {
   findFirst: 'findFirst',
-  findFirstOrThrow: 'findFirstOrThrow', 
+  findFirstOrThrow: 'findFirstOrThrow',
   findMany: 'findMany',
   findUnique: 'findUnique',
   findUniqueOrThrow: 'findUniqueOrThrow',
@@ -32,7 +32,7 @@ const ModelAction = {
   groupBy: 'groupBy',
   count: 'count',
   findRaw: 'findRaw',
-  aggregateRaw: 'aggregateRaw'
+  aggregateRaw: 'aggregateRaw',
 } as const;
 
 const modelActionEnum = z.nativeEnum(ModelAction);
@@ -52,6 +52,10 @@ export const configSchema = z.object({
         .split(',')
         .map((action) => modelActionEnum.parse(action.trim()));
     }),
+  importExtension: z
+    .enum(['js', 'ts', 'mjs', 'mts', 'cjs', 'cts', ''])
+    .default(''),
+  generatedExtension: z.enum(['ts', 'mts', 'cts']).default('ts'),
 });
 
 export type Config = z.infer<typeof configSchema>;

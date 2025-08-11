@@ -83,14 +83,19 @@ export async function generate(options: GeneratorOptions) {
   const hiddenModels: string[] = [];
   resolveModelsComments([...models], hiddenModels);
   const createRouter = project.createSourceFile(
-    path.resolve(outputDir, 'routers', 'helpers', 'createRouter.ts'),
+    path.resolve(
+      outputDir,
+      'routers',
+      'helpers',
+      `createRouter.${config.generatedExtension}`,
+    ),
     undefined,
     { overwrite: true },
   );
 
   generatetRPCImport(createRouter);
   if (config.withShield) {
-    generateShieldImport(createRouter, options, config.withShield);
+    generateShieldImport(createRouter, options, config.withShield, config);
   }
 
   generateBaseRouter(createRouter, config, options);
@@ -100,13 +105,14 @@ export async function generate(options: GeneratorOptions) {
   });
 
   const appRouter = project.createSourceFile(
-    path.resolve(outputDir, 'routers', `index.ts`),
+    path.resolve(outputDir, 'routers', `index.${config.generatedExtension}`),
     undefined,
     { overwrite: true },
   );
 
   generateCreateRouterImport({
     sourceFile: appRouter,
+    config,
   });
 
   const routerStatements = [];
@@ -125,9 +131,13 @@ export async function generate(options: GeneratorOptions) {
 
     const plural = pluralize(model.toLowerCase());
 
-    generateRouterImport(appRouter, plural, model);
+    generateRouterImport(appRouter, plural, model, config);
     const modelRouter = project.createSourceFile(
-      path.resolve(outputDir, 'routers', `${model}.router.ts`),
+      path.resolve(
+        outputDir,
+        'routers',
+        `${model}.router.${config.generatedExtension}`,
+      ),
       undefined,
       { overwrite: true },
     );

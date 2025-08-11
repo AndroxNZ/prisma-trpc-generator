@@ -5,6 +5,7 @@ export default function getRelativePath(
   filePath: string,
   isOutsideOutputPath?: boolean,
   schemaPath?: string,
+  importExtension?: string,
 ) {
   const fromPath = path.join(outputPath, 'routers', 'helpers');
   let toPath = path.join(outputPath, filePath);
@@ -17,10 +18,17 @@ export default function getRelativePath(
     toPath = path.join(schemaPathWithoutFileAndExtension, filePath);
   }
 
-  const newPath = path
+  let newPath = path
     .relative(fromPath, toPath)
     .split(path.sep)
     .join(path.posix.sep);
+
+  // Add import extension if specified
+  if (importExtension) {
+    // Remove existing extension if present
+    const withoutExt = newPath.replace(/\.[^/.]+$/, '');
+    newPath = `${withoutExt}.${importExtension}`;
+  }
 
   return newPath;
 }
