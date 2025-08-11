@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const configBoolean = z
   .enum(['true', 'false'])
-  .transform((arg) => JSON.parse(arg));
+  .transform((arg) => JSON.parse(arg) as boolean);
 
 const configMiddleware = z.union([
   configBoolean,
@@ -35,15 +35,15 @@ const ModelAction = {
   aggregateRaw: 'aggregateRaw',
 } as const;
 
-const modelActionEnum = z.nativeEnum(ModelAction);
+const modelActionEnum = z.enum(Object.values(ModelAction));
 
 export const configSchema = z.object({
   withMiddleware: configMiddleware.default('true'),
   withShield: configShield.default('true'),
-  withZod: configBoolean.default('true'),
+  withZod: configBoolean.default(true),
   contextPath: z.string().default('../../../../src/context'),
   trpcOptionsPath: z.string().optional(),
-  showModelNameInProcedure: configBoolean.default('true'),
+  showModelNameInProcedure: configBoolean.default(true),
   generateModelActions: z
     .string()
     .default(Object.values(ModelAction).join(','))

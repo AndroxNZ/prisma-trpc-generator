@@ -1,54 +1,31 @@
-import js from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsparser from '@typescript-eslint/parser';
-import prettier from 'eslint-config-prettier';
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
-export default [
-  js.configs.recommended,
+export default tseslint.config(
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: tsparser,
-      parserOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-        project: './tsconfig.eslint.json',
-      },
-      globals: {
-        process: 'readonly',
-        console: 'readonly',
-        Buffer: 'readonly',
-        __dirname: 'readonly',
-        __filename: 'readonly',
-        global: 'readonly',
-        require: 'readonly',
-        performance: 'readonly',
-        NodeJS: 'readonly',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
-    rules: {
-      ...tseslint.configs.recommended.rules,
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': 'error',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'warn',
-    },
-  },
-  prettier,
-  {
+    // Global ignores and top-level settings
     ignores: [
-      'node_modules/',
-      'lib/',
-      'package/',
-      'coverage/',
-      'prisma/generated/',
-      'tests/generated/',
-      '*.js',
-      '*.mjs',
+      'lib/**/*',
+      'package/**/*',
+      'tests/generated/**/*',
+      'node_modules/**/*',
+      'coverage/**/*',
+      '*.config.js',
+      'vitest.config.js',
+      'eslint.config.js',
     ],
   },
-];
+  eslint.configs.recommended,
+  ...tseslint.configs.strictTypeChecked,
+  eslintPluginPrettierRecommended, // Global settings for all TypeScript files
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        project: ['tsconfig.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+);

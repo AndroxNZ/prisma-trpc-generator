@@ -5,7 +5,7 @@ import fs from 'fs';
 
 describe('Generated Router Tests', () => {
   const generatedDir = path.join(process.cwd(), 'prisma', 'generated');
-  
+
   beforeAll(async () => {
     // Ensure we have generated files to test
     if (!fs.existsSync(generatedDir)) {
@@ -27,7 +27,12 @@ describe('Generated Router Tests', () => {
     });
 
     it('should generate createRouter helper', () => {
-      const helperFile = path.join(generatedDir, 'routers', 'helpers', 'createRouter.ts');
+      const helperFile = path.join(
+        generatedDir,
+        'routers',
+        'helpers',
+        'createRouter.ts',
+      );
       expect(fs.existsSync(helperFile)).toBe(true);
     });
 
@@ -35,11 +40,11 @@ describe('Generated Router Tests', () => {
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        const routerFiles = files.filter(file => file.endsWith('.router.ts'));
-        
+        const routerFiles = files.filter((file) => file.endsWith('.router.ts'));
+
         // Should have at least User and Post routers based on schema
         expect(routerFiles.length).toBeGreaterThan(0);
-        
+
         // Check for expected router files
         const expectedRouters = ['User.router.ts', 'Post.router.ts'];
         for (const expectedRouter of expectedRouters) {
@@ -56,12 +61,12 @@ describe('Generated Router Tests', () => {
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        const tsFiles = files.filter(file => file.endsWith('.ts'));
-        
+        const tsFiles = files.filter((file) => file.endsWith('.ts'));
+
         for (const file of tsFiles) {
           const filePath = path.join(routersDir, file);
           const content = fs.readFileSync(filePath, 'utf-8');
-          
+
           // Basic syntax checks
           expect(content).toContain('export');
           expect(content).not.toContain('undefined');
@@ -74,7 +79,7 @@ describe('Generated Router Tests', () => {
       const indexFile = path.join(generatedDir, 'routers', 'index.ts');
       if (fs.existsSync(indexFile)) {
         const content = fs.readFileSync(indexFile, 'utf-8');
-        
+
         // Should import createRouter helper
         expect(content).toMatch(/import.*createRouter/);
         expect(content).toContain('appRouter');
@@ -86,23 +91,29 @@ describe('Generated Router Tests', () => {
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        const routerFiles = files.filter(file => file.endsWith('.router.ts'));
-        
+        const routerFiles = files.filter((file) => file.endsWith('.router.ts'));
+
         for (const routerFile of routerFiles) {
           const filePath = path.join(routersDir, routerFile);
           const content = fs.readFileSync(filePath, 'utf-8');
-          
+
           // Should contain common CRUD operations
-          const commonOperations = ['findMany', 'findUnique', 'create', 'update', 'delete'];
+          const commonOperations = [
+            'findMany',
+            'findUnique',
+            'create',
+            'update',
+            'delete',
+          ];
           let hasOperations = false;
-          
+
           for (const operation of commonOperations) {
             if (content.includes(operation)) {
               hasOperations = true;
               break;
             }
           }
-          
+
           expect(hasOperations).toBe(true);
         }
       }
@@ -133,12 +144,12 @@ describe('Generated Router Tests', () => {
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        const routerFiles = files.filter(file => file.endsWith('.router.ts'));
-        
+        const routerFiles = files.filter((file) => file.endsWith('.router.ts'));
+
         for (const routerFile of routerFiles) {
           const filePath = path.join(routersDir, routerFile);
           const content = fs.readFileSync(filePath, 'utf-8');
-          
+
           // Should export a router
           expect(content).toMatch(/export const \w+Router/);
           expect(content).toContain('t.router');
@@ -155,7 +166,7 @@ describe('Generated Router Tests', () => {
         const helperFile = path.join(routersDir, 'helpers', 'createRouter.ts');
         if (fs.existsSync(helperFile)) {
           const content = fs.readFileSync(helperFile, 'utf-8');
-          
+
           // Should use tRPC patterns
           expect(content).toMatch(/import.*@trpc/);
           expect(content).toContain('procedure');
@@ -167,12 +178,12 @@ describe('Generated Router Tests', () => {
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        const routerFiles = files.filter(file => file.endsWith('.router.ts'));
-        
+        const routerFiles = files.filter((file) => file.endsWith('.router.ts'));
+
         for (const routerFile of routerFiles) {
           const filePath = path.join(routersDir, routerFile);
           const content = fs.readFileSync(filePath, 'utf-8');
-          
+
           // Should import Zod schemas if withZod is enabled
           if (content.includes('Schema')) {
             expect(content).toMatch(/import.*Schema/);
@@ -185,21 +196,22 @@ describe('Generated Router Tests', () => {
   describe('Performance Tests', () => {
     it('should generate files in reasonable time', async () => {
       const start = performance.now();
-      
+
       // Test file reading performance
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        for (const file of files.slice(0, 5)) { // Test first 5 files
+        for (const file of files.slice(0, 5)) {
+          // Test first 5 files
           if (file.endsWith('.ts')) {
             fs.readFileSync(path.join(routersDir, file), 'utf-8');
           }
         }
       }
-      
+
       const end = performance.now();
       const duration = end - start;
-      
+
       // Should be able to read files quickly
       expect(duration).toBeLessThan(1000); // Less than 1 second
     });
@@ -208,12 +220,12 @@ describe('Generated Router Tests', () => {
       const routersDir = path.join(generatedDir, 'routers');
       if (fs.existsSync(routersDir)) {
         const files = fs.readdirSync(routersDir);
-        
+
         for (const file of files) {
           if (file.endsWith('.ts')) {
             const filePath = path.join(routersDir, file);
             const stats = fs.statSync(filePath);
-            
+
             // Individual router files shouldn't be too large (500KB limit)
             expect(stats.size).toBeLessThan(500 * 1024);
           }

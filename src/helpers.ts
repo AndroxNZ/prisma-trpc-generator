@@ -269,14 +269,14 @@ export function generateProcedure(
   sourceFile.addStatements(/* ts */ `${
     config.showModelNameInProcedure ? name : nameWithoutModel
   }: ${getProcedureName(config)}
-  ${config.withZod ? `.input(${typeName})` : ''}.${getProcedureTypeByOpName(
-    baseOpType,
-  )}(async ({ ctx, input }) => {
-    const ${name} = await ctx.prisma.${uncapitalizeFirstLetter(
-      modelName,
-    )}.${opType.replace('One', '')}(${input});
-    return ${name};
-  }),`);
+    ${config.withZod ? `.input(${typeName})` : ''}.${
+      getProcedureTypeByOpName(baseOpType) || 'query'
+    }(async ({ ctx, input }) => {
+      const ${name} = await ctx.prisma.${uncapitalizeFirstLetter(
+        modelName,
+      )}.${opType.replace('One', '')}(${input});
+      return ${name};
+    }),`);
 }
 
 export function generateRouterSchemaImports(

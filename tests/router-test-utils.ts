@@ -5,10 +5,13 @@ export class RouterTestUtils {
   /**
    * Test that a router has the expected procedures
    */
-  static testRouterStructure(router: Record<string, unknown>, expectedProcedures: string[]) {
+  static testRouterStructure(
+    router: Record<string, unknown>,
+    expectedProcedures: string[],
+  ) {
     expect(router).toBeDefined();
     expect(typeof router).toBe('object');
-    
+
     for (const procedure of expectedProcedures) {
       expect(router[procedure]).toBeDefined();
       expect(typeof router[procedure]).toBe('object');
@@ -42,13 +45,13 @@ export class RouterTestUtils {
   static testInvalidData<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
-    expectedErrorPaths?: string[]
+    expectedErrorPaths?: string[],
   ) {
     const result = schema.safeParse(data);
     expect(result.success).toBe(false);
-    
+
     if (expectedErrorPaths && !result.success) {
-      const errorPaths = result.error.errors.map(err => err.path.join('.'));
+      const errorPaths = result.error.errors.map((err) => err.path.join('.'));
       for (const expectedPath of expectedErrorPaths) {
         expect(errorPaths).toContain(expectedPath);
       }
@@ -61,7 +64,7 @@ export class RouterTestUtils {
   static testOptionalFields<T>(
     schema: z.ZodSchema<T>,
     baseData: Record<string, unknown>,
-    optionalFields: string[]
+    optionalFields: string[],
   ) {
     // Test with all optional fields present
     this.testValidData(schema, baseData);
@@ -96,21 +99,21 @@ export class RouterTestUtils {
   static testPerformance<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
-    iterations: number = 1000
+    iterations: number = 1000,
   ) {
     const start = performance.now();
-    
+
     for (let i = 0; i < iterations; i++) {
       schema.safeParse(data);
     }
-    
+
     const end = performance.now();
     const duration = end - start;
     const avgTime = duration / iterations;
-    
+
     // Expect average validation time to be under 1ms
     expect(avgTime).toBeLessThan(1);
-    
+
     return { totalTime: duration, averageTime: avgTime };
   }
 
@@ -120,7 +123,7 @@ export class RouterTestUtils {
   static async testTrpcCompatibility(router: () => unknown) {
     expect(router).toBeDefined();
     expect(typeof router).toBe('function');
-    
+
     // Test that router can be called (basic tRPC compatibility)
     expect(() => router()).not.toThrow();
   }

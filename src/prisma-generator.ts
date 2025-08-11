@@ -178,7 +178,7 @@ export async function generate(options: GeneratorOptions) {
   }
 
   appRouter.addStatements(/* ts */ `
-    export const appRouter = t.router({${routerStatements}})
+    export const appRouter = t.router({${routerStatements.join(',')}})
     `);
 
   appRouter.formatText({ indentSize: 2 });

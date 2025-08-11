@@ -6,9 +6,11 @@ export default async function removeDir(dirPath: string, onlyContent: boolean) {
   await Promise.all(
     dirEntries.map(async (dirEntry) => {
       const fullPath = path.join(dirPath, dirEntry.name);
-      return dirEntry.isDirectory()
-        ? await removeDir(fullPath, false)
-        : await fs.unlink(fullPath);
+      if (dirEntry.isDirectory()) {
+        await removeDir(fullPath, false);
+      } else {
+        await fs.unlink(fullPath);
+      }
     }),
   );
   if (!onlyContent) {
