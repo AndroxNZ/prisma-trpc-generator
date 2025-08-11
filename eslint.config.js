@@ -48,7 +48,7 @@ export default [
       'prisma/generated/',
       'tests/generated/',
       '*.js',
-      '*.mjs'
+      '*.mjs',
     ],
   },
 ];

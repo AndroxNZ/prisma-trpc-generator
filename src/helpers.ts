@@ -1,16 +1,20 @@
-import { DMMF, EnvValue, GeneratorOptions } from '@prisma/generator-helper';
-import { parseEnvValue } from '@prisma/internals';
+import { DMMF, GeneratorOptions } from '@prisma/generator-helper';
+import prismaInternals from '@prisma/internals';
 import { SourceFile } from 'ts-morph';
-import { Config } from './config';
-import getRelativePath from './utils/getRelativePath';
-import { uncapitalizeFirstLetter } from './utils/uncapitalizeFirstLetter';
+import { Config } from './config.js';
+import getRelativePath from './utils/getRelativePath.js';
+import { uncapitalizeFirstLetter } from './utils/uncapitalizeFirstLetter.js';
+
+const { parseEnvValue } = prismaInternals;
 
 const getProcedureName = (config: Config) => {
-  return config.withShield
-    ? 'shieldedProcedure'
-    : config.withMiddleware
-    ? 'protectedProcedure'
-    : 'publicProcedure';
+  if (config.withShield) {
+    return 'shieldedProcedure';
+  }
+  if (config.withMiddleware) {
+    return 'protectedProcedure';
+  }
+  return 'publicProcedure';
 };
 
 export const generateCreateRouterImport = ({
@@ -44,7 +48,11 @@ export const generateShieldImport = (
   options: GeneratorOptions,
   value: string | boolean,
 ) => {
-  const outputDir = parseEnvValue(options.generator.output as EnvValue);
+  const output = options.generator.output;
+  if (!output) {
+    throw new Error('Generator output path is required');
+  }
+  const outputDir = parseEnvValue(output);
 
   let shieldPath = getRelativePath(outputDir, 'shield/shield');
 
@@ -62,7 +70,11 @@ export const generateMiddlewareImport = (
   sourceFile: SourceFile,
   options: GeneratorOptions,
 ) => {
-  const outputDir = parseEnvValue(options.generator.output as EnvValue);
+  const output = options.generator.output;
+  if (!output) {
+    throw new Error('Generator output path is required');
+  }
+  const outputDir = parseEnvValue(output);
   sourceFile.addImportDeclaration({
     moduleSpecifier: getRelativePath(outputDir, 'middleware'),
     namedImports: ['permissions'],
@@ -85,7 +97,13 @@ export function generateBaseRouter(
   config: Config,
   options: GeneratorOptions,
 ) {
-  const outputDir = parseEnvValue(options.generator.output as EnvValue);
+  const output = options.generator.output;
+  if (!output) {
+    throw new Error('Generator output path is required');
+  }
+  const outputDir = parseEnvValue(output);
+
+  // Add context import
   sourceFile.addStatements(/* ts */ `
   import type { Context } from '${getRelativePath(
     outputDir,
@@ -95,6 +113,7 @@ export function generateBaseRouter(
   )}';
   `);
 
+  // Add trpcOptions import if specified
   if (config.trpcOptionsPath) {
     sourceFile.addStatements(/* ts */ `
     import trpcOptions from '${getRelativePath(
@@ -106,14 +125,40 @@ export function generateBaseRouter(
     `);
   }
 
+  // Initialize tRPC
   sourceFile.addStatements(/* ts */ `
   export const t = trpc.initTRPC.context<Context>().create(${
     config.trpcOptionsPath ? 'trpcOptions' : ''
   });
   `);
 
-  const middlewares = [];
+  // Generate middleware declarations
+  const middlewares = generateMiddlewareDeclarations(
+    sourceFile,
+    config,
+    options,
+    outputDir,
+  );
 
+  // Add public procedure
+  sourceFile.addStatements(/* ts */ `
+    export const publicProcedure = t.procedure; `);
+
+  // Add protected/shielded procedure if middlewares exist
+  if (middlewares.length > 0) {
+    addProtectedProcedure(sourceFile, config, middlewares);
+  }
+}
+
+function generateMiddlewareDeclarations(
+  sourceFile: SourceFile,
+  config: Config,
+  options: GeneratorOptions,
+  outputDir: string,
+) {
+  const middlewares: Array<{ type: string; value: string }> = [];
+
+  // Handle global middleware (boolean)
   if (config.withMiddleware && typeof config.withMiddleware === 'boolean') {
     sourceFile.addStatements(/* ts */ `
     export const globalMiddleware = t.middleware(async ({ ctx, next }) => {
@@ -126,6 +171,7 @@ export function generateBaseRouter(
     });
   }
 
+  // Handle global middleware (string path)
   if (config.withMiddleware && typeof config.withMiddleware === 'string') {
     sourceFile.addStatements(/* ts */ `
   import defaultMiddleware from '${getRelativePath(
@@ -143,6 +189,7 @@ export function generateBaseRouter(
     });
   }
 
+  // Handle shield middleware
   if (config.withShield) {
     sourceFile.addStatements(/* ts */ `
     export const permissionsMiddleware = t.middleware(permissions); `);
@@ -153,28 +200,31 @@ export function generateBaseRouter(
     });
   }
 
-  sourceFile.addStatements(/* ts */ `
-    export const publicProcedure = t.procedure; `);
+  return middlewares;
+}
 
-  if (middlewares.length > 0) {
-    const procName = getProcedureName(config);
+function addProtectedProcedure(
+  sourceFile: SourceFile,
+  config: Config,
+  middlewares: Array<{ type: string; value: string }>,
+) {
+  const procName = getProcedureName(config);
 
-    middlewares.forEach((middleware, i) => {
-      if (i === 0) {
-        sourceFile.addStatements(/* ts */ `
+  middlewares.forEach((middleware, i) => {
+    if (i === 0) {
+      sourceFile.addStatements(/* ts */ `
     export const ${procName} = t.procedure
       `);
-      }
+    }
 
-      sourceFile.addStatements(/* ts */ `
+    sourceFile.addStatements(/* ts */ `
       .use(${
         middleware.type === 'shield'
           ? 'permissionsMiddleware'
           : 'globalMiddleware'
       })
       `);
-    });
-  }
+  });
 }
 
 export function generateProcedure(
@@ -187,7 +237,7 @@ export function generateProcedure(
   config: Config,
 ) {
   let input = `input${!config.withZod ? ' as any' : ''}`;
-  const nameWithoutModel = name.replace(modelName as string, '');
+  const nameWithoutModel = name.replace(modelName, '');
   if (nameWithoutModel === 'groupBy' && config.withZod) {
     input =
       '{ where: input.where, orderBy: input.orderBy, by: input.by, having: input.having, take: input.take, skip: input.skip }';
@@ -199,8 +249,8 @@ export function generateProcedure(
     baseOpType,
   )}(async ({ ctx, input }) => {
     const ${name} = await ctx.prisma.${uncapitalizeFirstLetter(
-    modelName,
-  )}.${opType.replace('One', '')}(${input});
+      modelName,
+    )}.${opType.replace('One', '')}(${input});
     return ${name};
   }),`);
 }
@@ -281,7 +331,7 @@ export const getInputTypeByOpName = (opName: string, modelName: string) => {
       inputType = `${modelName}GroupBySchema`;
       break;
     default:
-      // Fallback for unknown operation types
+    // Fallback for unknown operation types
   }
   return inputType;
 };
@@ -308,7 +358,7 @@ export const getProcedureTypeByOpName = (opName: string) => {
       procType = 'mutation';
       break;
     default:
-      // Fallback for unknown operation types
+    // Fallback for unknown operation types
   }
   return procType;
 };
@@ -322,34 +372,62 @@ export function resolveModelsComments(
   const attributeArgsRegex = /(?:\()+([A-Za-z])+:+(.+)+(?:\))+/;
 
   for (const model of models) {
-    if (model.documentation) {
-      const attribute = model.documentation?.match(modelAttributeRegex)?.[0];
-      const attributeName = attribute
-        ?.match(attributeNameRegex)?.[0]
-        ?.slice(1, -1);
-      if (attributeName !== 'model') continue;
-      const rawAttributeArgs = attribute
-        ?.match(attributeArgsRegex)?.[0]
-        ?.slice(1, -1);
+    if (!model.documentation) continue;
 
-      const parsedAttributeArgs: Record<string, unknown> = {};
-      if (rawAttributeArgs) {
-        const rawAttributeArgsParts = rawAttributeArgs
-          .split(':')
-          .map((it) => it.trim())
-          .map((part) => (part.startsWith('[') ? part : part.split(',')))
-          .flat()
-          .map((it) => it.trim());
+    const attribute = parseModelAttribute(
+      model.documentation,
+      modelAttributeRegex,
+    );
+    if (!attribute) continue;
 
-        for (let i = 0; i < rawAttributeArgsParts.length; i += 2) {
-          const key = rawAttributeArgsParts[i];
-          const value = rawAttributeArgsParts[i + 1];
-          parsedAttributeArgs[key] = JSON.parse(value);
-        }
-      }
-      if (parsedAttributeArgs.hide) {
-        hiddenModels.push(model.name);
-      }
+    const attributeName = parseAttributeName(attribute, attributeNameRegex);
+    if (attributeName !== 'model') continue;
+
+    const rawAttributeArgs = parseAttributeArgs(attribute, attributeArgsRegex);
+    const parsedAttributeArgs = parseAttributeArgsToObject(rawAttributeArgs);
+
+    if (parsedAttributeArgs.hide) {
+      hiddenModels.push(model.name);
     }
   }
+}
+
+function parseModelAttribute(documentation: string, regex: RegExp) {
+  return RegExp(regex).exec(documentation)?.[0];
+}
+
+function parseAttributeName(attribute: string, regex: RegExp) {
+  return RegExp(regex).exec(attribute)?.[0]?.slice(1, -1);
+}
+
+function parseAttributeArgs(attribute: string, regex: RegExp) {
+  return RegExp(regex).exec(attribute)?.[0]?.slice(1, -1);
+}
+
+function parseAttributeArgsToObject(rawAttributeArgs: string | undefined) {
+  const parsedAttributeArgs: Record<string, unknown> = {};
+
+  if (!rawAttributeArgs) {
+    return parsedAttributeArgs;
+  }
+
+  const rawAttributeArgsParts = rawAttributeArgs
+    .split(':')
+    .map((it) => it.trim())
+    .map((part) => (part.startsWith('[') ? part : part.split(',')))
+    .flat()
+    .map((it) => it.trim());
+
+  for (let i = 0; i < rawAttributeArgsParts.length; i += 2) {
+    const key = rawAttributeArgsParts[i];
+    const value = rawAttributeArgsParts[i + 1];
+    try {
+      parsedAttributeArgs[key] = JSON.parse(value);
+    } catch {
+      // If JSON parsing fails, keep the raw value
+      parsedAttributeArgs[key] = value;
+    }
+  }
+
+  return parsedAttributeArgs;
 }

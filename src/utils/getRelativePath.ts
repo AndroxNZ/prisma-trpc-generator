@@ -9,7 +9,7 @@ export default function getRelativePath(
   const fromPath = path.join(outputPath, 'routers', 'helpers');
   let toPath = path.join(outputPath, filePath);
 
-  if (isOutsideOutputPath) {
+  if (isOutsideOutputPath && schemaPath) {
     const schemaPathSplit = schemaPath.split(path.sep);
     const schemaPathWithoutFileAndExtension = schemaPathSplit
       .slice(0, schemaPathSplit.length - 1)

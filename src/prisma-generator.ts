@@ -1,11 +1,11 @@
 import { EnvValue, GeneratorOptions } from '@prisma/generator-helper';
-import { getDMMF, parseEnvValue } from '@prisma/internals';
+import prismaInternals from '@prisma/internals';
 import { promises as fs } from 'fs';
 import path from 'path';
 import pluralize from 'pluralize';
-import { generate as PrismaTrpcShieldGenerator } from 'prisma-trpc-shield-generator/lib/prisma-generator';
-import { generate as PrismaZodGenerator } from 'prisma-zod-generator/lib/prisma-generator';
-import { configSchema } from './config';
+import { generate as PrismaTrpcShieldGenerator } from 'prisma-trpc-shield-generator/lib/prisma-generator.js';
+import { generate as PrismaZodGenerator } from 'prisma-zod-generator/lib/prisma-generator.js';
+import { configSchema } from './config.js';
 import {
   generateBaseRouter,
   generateCreateRouterImport,
@@ -16,9 +16,11 @@ import {
   generatetRPCImport,
   getInputTypeByOpName,
   resolveModelsComments,
-} from './helpers';
-import { project } from './project';
-import removeDir from './utils/removeDir';
+} from './helpers.js';
+import { project } from './project.js';
+import removeDir from './utils/removeDir.js';
+
+const { getDMMF, parseEnvValue } = prismaInternals;
 
 export async function generate(options: GeneratorOptions) {
   const outputDir = parseEnvValue(options.generator.output as EnvValue);
@@ -42,6 +44,7 @@ export async function generate(options: GeneratorOptions) {
         output: {
           ...options.generator.output,
           value: shieldOutputPath,
+          fromEnvVar: null,
         },
         config: {
           ...options.generator.config,
@@ -51,24 +54,22 @@ export async function generate(options: GeneratorOptions) {
     });
   }
 
-  const prismaClientProvider = options.otherGenerators.find(
-    (it) => {
-      const provider = parseEnvValue(it.provider);
-      return provider === 'prisma-client-js' || provider === 'prisma-client';
-    },
-  );
+  const prismaClientProvider = options.otherGenerators.find((it) => {
+    const provider = parseEnvValue(it.provider);
+    return provider === 'prisma-client-js' || provider === 'prisma-client';
+  });
 
   if (!prismaClientProvider) {
     throw new Error(
       'Prisma tRPC Generator requires a Prisma Client generator. Please add one of the following to your schema:\n\n' +
-      'generator client {\n' +
-      '  provider = "prisma-client-js"\n' +
-      '}\n\n' +
-      'OR\n\n' +
-      'generator client {\n' +
-      '  provider = "prisma-client"\n' +
-      '  output   = "./generated/client"\n' +
-      '}'
+        'generator client {\n' +
+        '  provider = "prisma-client-js"\n' +
+        '}\n\n' +
+        'OR\n\n' +
+        'generator client {\n' +
+        '  provider = "prisma-client"\n' +
+        '  output   = "./generated/client"\n' +
+        '}',
     );
   }
 
@@ -114,12 +115,12 @@ export async function generate(options: GeneratorOptions) {
     const { model, ...operations } = modelOperation;
     if (hiddenModels.includes(model)) continue;
 
-    const modelActions = Object.keys(operations).filter(
-      (opType) => {
-        const baseOpType = opType.replace('One', '').replace('OrThrow', '');
-        return config.generateModelActions.some(action => action === baseOpType);
-      }
-    );
+    const modelActions = Object.keys(operations).filter((opType) => {
+      const baseOpType = opType.replace('One', '').replace('OrThrow', '');
+      return config.generateModelActions.some(
+        (action) => action === baseOpType,
+      );
+    });
     if (!modelActions.length) continue;
 
     const plural = pluralize(model.toLowerCase());
@@ -149,8 +150,8 @@ export async function generate(options: GeneratorOptions) {
 
       generateProcedure(
         modelRouter,
-        opNameWithModel,
-        getInputTypeByOpName(baseOpType, model),
+        opNameWithModel ?? '',
+        getInputTypeByOpName(baseOpType, model) ?? '',
         model,
         opType,
         baseOpType,

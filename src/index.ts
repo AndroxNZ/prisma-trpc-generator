@@ -1,5 +1,7 @@
-import { generatorHandler } from '@prisma/generator-helper';
-import { generate } from './prisma-generator';
+import prismaGeneratorHelper from '@prisma/generator-helper';
+import { generate } from './prisma-generator.js';
+
+const { generatorHandler } = prismaGeneratorHelper;
 
 generatorHandler({
   onManifest: () => ({
